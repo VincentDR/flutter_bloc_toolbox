@@ -1,14 +1,22 @@
 name: flutter_bloc_toolbox
 description: Build on top of the wonderful flutter_bloc package. Contains some useful blocs/cubits.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/VincentDR/flutter_bloc_toolbox
 issue_tracker: https://github.com/VincentDR/flutter_bloc_toolbox/issues
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  bloc_test: ^9.1.4
   equatable: ^2.0.5
   flutter:
     sdk: flutter
