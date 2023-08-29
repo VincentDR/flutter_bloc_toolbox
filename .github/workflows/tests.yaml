@@ -1,18 +1,18 @@
 name: Run tests and upload coverage reports to Codecov
 on: [push]
 jobs:
-  first_job:
+  job_tests:
     name: Run tests
     runs-on: self-hosted
     steps:
       - name: Flutter test
-        working-directory: ../
         run: |
           flutter pub get
           flutter analyze
           flutter test --coverage
-  second_job:
+  job_export:
     name: Export Codecov reports
+    needs: job_tests
     runs-on: self-hosted
     steps:
       - name: Codecov
