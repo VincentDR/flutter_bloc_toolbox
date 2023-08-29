@@ -1,7 +1,12 @@
+## 0.0.4
+
+Testing
+
 ## 0.0.3
 
 Testing
 GitHub Actions
+CodeCov coverage
 
 ## 0.0.2
 
