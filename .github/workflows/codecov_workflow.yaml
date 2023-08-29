@@ -1,6 +1,0 @@
-- name: Upload coverage reports to Codecov
-  on: [push]
-  uses: codecov/codecov-action@v3
-  runs-on: self-hosted
-  env:
-    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
