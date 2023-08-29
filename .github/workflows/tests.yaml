@@ -6,7 +6,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Flutter test
-        working_directory: ../
         run: |
           pwd
           flutter pub get
