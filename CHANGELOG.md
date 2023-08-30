@@ -1,11 +1,12 @@
 ## 0.0.4
 
 Testing
+GitHub Actions to auto publish
 
 ## 0.0.3
 
 Testing
-GitHub Actions
+GitHub Actions to test
 CodeCov coverage
 
 ## 0.0.2
