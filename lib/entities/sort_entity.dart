@@ -1,4 +1,4 @@
-/// Represent a sort based on a enum
+/// Represent a sort_enum based on a enum
 class SortEntity<T extends Enum> {
   final bool ascendant;
   final T value;
