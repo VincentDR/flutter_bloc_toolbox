@@ -7,19 +7,20 @@ import 'mock_filter_enum_entity.dart';
 part 'mock_filter_enum_state.dart';
 
 class MockFilterEnumCubit extends FilterEnumAbstractCubit<MockEnum, MockFilterEnumEntity, MockFilterEnumState> {
-  MockFilterEnumCubit()
+  MockFilterEnumCubit(bool Function(MockEnum) selectedByDefault)
       : super(
           MockFilterInitialState(
             MockEnum.values.fold(
               [],
               (previousValue, e) {
-                previousValue.add(MockFilterEnumEntity(e, false));
+                previousValue.add(MockFilterEnumEntity(e, selectedByDefault(e)));
                 return previousValue;
               },
             ),
           ),
           enumValues: MockEnum.values,
           enumBuilder: (MockEnum s, bool b) => MockFilterEnumEntity(s, b),
+          selectedByDefault: selectedByDefault,
         );
 
   @override
@@ -35,27 +36,4 @@ class MockFilterEnumCubit extends FilterEnumAbstractCubit<MockEnum, MockFilterEn
     List<MockFilterEnumEntity> filters,
   ) =>
       MockFilterDefaultFilterState(filters);
-
-  @override
-  @protected
-  MockFilterInitialState initialState() => MockFilterInitialState(
-        enumValues.fold(
-          [],
-          (previousValue, e) {
-            previousValue.add(enumBuilder(e, false));
-
-            return previousValue;
-          },
-        ),
-      );
-
-  @override
-  setDefaultFilters(bool Function(MockEnum) selectedByDefault) {
-    List<MockFilterEnumEntity> newStatus = [];
-    for (MockFilterEnumEntity model in state.filters.reversed) {
-      bool mustBePicked = model.filterEnum == MockEnum.mock2;
-      newStatus.insert(0, MockFilterEnumEntity(model.filterEnum, mustBePicked));
-    }
-    emit(defaultState(newStatus));
-  }
 }
