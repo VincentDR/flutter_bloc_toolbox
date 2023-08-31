@@ -1,3 +1,7 @@
+## 0.0.5
+
+Fix publish script
+
 ## 0.0.4
 
 Testing
