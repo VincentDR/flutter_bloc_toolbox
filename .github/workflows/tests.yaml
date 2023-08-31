@@ -1,11 +1,11 @@
 name: Run tests and upload coverage reports to Codecov
 on: [push]
+with:
+  environment: pub.dev
 jobs:
   job_tests:
     name: Run tests
     runs-on: self-hosted
-    with:
-      environment: pub.dev
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
