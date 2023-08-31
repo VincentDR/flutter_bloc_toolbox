@@ -1,8 +1,8 @@
 name: Publish to pub.dev
-on: [push]
-#  push:
-#    tags:
-#      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: 'v'
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: 'v'
 jobs:
   publish:
     permissions:
@@ -13,5 +13,5 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - name: Install dependencies
         run: flutter pub get
-#      - name: Publish
-#        run: dart pub publish --force
+      - name: Publish
+        run: dart pub publish --force
