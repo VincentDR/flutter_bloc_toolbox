@@ -12,11 +12,13 @@ abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity ext
     with CubitPreventsEmitOnClosed<TState> {
   final List<TEnum> enumValues;
   final TFilterEnumEntity Function(TEnum, bool) enumBuilder;
+  final bool Function(TEnum) selectedByDefault;
 
   FilterEnumAbstractCubit(
     super.initialState, {
     required this.enumValues,
     required this.enumBuilder,
+    required this.selectedByDefault,
   });
 
   @mustBeOverridden
@@ -25,15 +27,16 @@ abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity ext
 
   @mustBeOverridden
   @protected
-  defaultState(
-    List<TFilterEnumEntity> filters,
-  );
+  defaultState(List<TFilterEnumEntity> filters);
 
-  @mustBeOverridden
-  @protected
-  initialState();
-
-  reset() => emit(initialState());
+  reset() => emit(
+        defaultState(
+          enumValues.fold(
+            [],
+            (previousValue, element) => previousValue..add(enumBuilder(element, selectedByDefault(element))),
+          ),
+        ),
+      );
 
   toggleEnum(TEnum toggledEnum) {
     emit(
@@ -57,24 +60,29 @@ abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity ext
   }
 
   setFiltersFromList(List<TFilterEnumEntity> possibleEnums) {
-    emit(filteredState(possibleEnums));
+    List<TFilterEnumEntity> newFilters = [];
+    for (TEnum model in enumValues.reversed) {
+      bool mustBePicked = possibleEnums.where((element) => element.filterEnum == model).firstOrNull?.picked ?? false;
+      newFilters.insert(0, enumBuilder(model, mustBePicked));
+    }
+    emit(filteredState(newFilters));
   }
 
-  setDefaultFilters(bool Function(TEnum) selectedByDefault) {
+  setDefaultFilters() {
     List<TFilterEnumEntity> newFilters = [];
-    for (TFilterEnumEntity model in state.filters.reversed) {
-      bool mustBePicked = selectedByDefault(model.filterEnum);
-      newFilters.insert(0, enumBuilder(model.filterEnum, mustBePicked));
+    for (TEnum model in enumValues.reversed) {
+      bool mustBePicked = selectedByDefault(model);
+      newFilters.insert(0, enumBuilder(model, mustBePicked));
     }
     emit(defaultState(newFilters));
   }
 
   setFilterFromPicked(List<TEnum> selectedFilters) {
     List<TFilterEnumEntity> newFilters = [];
-    for (TFilterEnumEntity model in state.filters.reversed) {
-      bool mustBePicked = selectedFilters.contains(model.filterEnum);
-      newFilters.insert(0, enumBuilder(model.filterEnum, mustBePicked));
+    for (TEnum model in enumValues.reversed) {
+      bool mustBePicked = selectedFilters.contains(model);
+      newFilters.insert(0, enumBuilder(model, mustBePicked));
     }
-    emit(defaultState(newFilters));
+    emit(filteredState(newFilters));
   }
 }

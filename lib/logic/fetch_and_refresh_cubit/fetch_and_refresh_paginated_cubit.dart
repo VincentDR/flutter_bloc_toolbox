@@ -17,5 +17,5 @@ abstract class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPagin
   Future<void> fetch({required TIdType idToFetch, bool loadMore, bool getAll});
 
   @override
-  void directSet(TType objectToSet, {bool loadMore});
+  void directSet(TType objectToSet, {TIdType id, bool loadMore});
 }
