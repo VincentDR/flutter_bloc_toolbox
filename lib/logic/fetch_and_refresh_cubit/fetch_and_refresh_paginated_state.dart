@@ -7,15 +7,24 @@ abstract class FetchAndRefreshPaginatedState<TIdType, TType> extends FetchAndRef
 
 abstract class FetchAndRefreshPaginatedMoreState<TIdType, TType> extends FetchAndRefreshWithValueState<TIdType, TType>
     implements FetchAndRefreshLoadingState {
-  const FetchAndRefreshPaginatedMoreState({required super.id, required super.object});
+  const FetchAndRefreshPaginatedMoreState({
+    required super.id,
+    required super.object,
+  });
 }
 
 abstract class FetchAndRefreshPaginatedMoreErrorState<TIdType, TType>
     extends FetchAndRefreshWithValueState<TIdType, TType> implements FetchAndRefreshErrorState {
-  const FetchAndRefreshPaginatedMoreErrorState({required super.id, required super.object});
+  const FetchAndRefreshPaginatedMoreErrorState({
+    required super.id,
+    required super.object,
+  });
 }
 
 abstract class FetchAndRefreshPaginatedMoreSuccessState<TIdType, TType>
     extends FetchAndRefreshWithValueState<TIdType, TType> implements FetchAndRefreshSuccessState {
-  const FetchAndRefreshPaginatedMoreSuccessState({required super.id, required super.object});
+  const FetchAndRefreshPaginatedMoreSuccessState({
+    required super.id,
+    required super.object,
+  });
 }
