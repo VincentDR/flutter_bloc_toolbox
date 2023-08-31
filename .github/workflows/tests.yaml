@@ -1,7 +1,5 @@
 name: Run tests and upload coverage reports to Codecov
 on: [push]
-with:
-  environment: pub.dev
 jobs:
   job_tests:
     name: Run tests

@@ -9,10 +9,11 @@ jobs:
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
-    runs-on: self-hosted
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
     with:
       # Specify the github actions deployment environment
       environment: pub.dev
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
