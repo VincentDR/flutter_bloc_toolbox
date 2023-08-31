@@ -4,6 +4,8 @@ jobs:
   job_tests:
     name: Run tests
     runs-on: self-hosted
+    with:
+      environment: pub.dev
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
