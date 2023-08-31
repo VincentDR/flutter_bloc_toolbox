@@ -11,7 +11,11 @@ abstract class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPagin
 
   @protected
   @override
-  Future<TType?> getObject({required TIdType idToGet, bool loadMore, bool getAll});
+  Future<TType?> getObject({
+    required TIdType idToGet,
+    bool loadMore,
+    bool getAll,
+  });
 
   @override
   Future<void> fetch({required TIdType idToFetch, bool loadMore, bool getAll});

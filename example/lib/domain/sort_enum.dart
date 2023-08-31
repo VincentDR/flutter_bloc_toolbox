@@ -1,0 +1,4 @@
+enum SortEnum {
+  lastName,
+  fistName,
+}

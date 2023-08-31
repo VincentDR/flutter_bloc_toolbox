@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
+import 'package:meta/meta.dart';
 
 /// Assert that the state is valid to render the widget
 /// Else will display a button to request a new try
@@ -10,18 +11,35 @@ abstract class FetchAndRefreshStateValidWrapper<
     TValidState extends FetchAndRefreshWithValueState<TIdType, TType>,
     TIdType,
     TType> extends StatelessWidget {
+  /// The id of the fetched element
+  /// Check if the id is the correct one
   final TIdType? idToCheck;
+
+  /// Cubit to use, when missing in the context
+  final TCubit? cubit;
+
+  /// Builder to render the valid widget
   final Widget Function(BuildContext, TValidState) validRender;
+
+  /// Builder to render the loading widget
   final Widget Function(BuildContext)? loadingRender;
+
+  /// Builder to render the error widget
   final Widget Function(BuildContext)? errorRender;
+
+  /// Set to true if used in a sliver context
   final bool sliver;
+
+  /// Custom retry text if needed
   final String Function(BuildContext)? retryText;
 
+  @mustBeOverridden
   String get errorMessage;
 
   const FetchAndRefreshStateValidWrapper({
     super.key,
     this.idToCheck,
+    this.cubit,
     required this.validRender,
     this.loadingRender,
     this.errorRender,
@@ -32,6 +50,7 @@ abstract class FetchAndRefreshStateValidWrapper<
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TCubit, TState>(
+      bloc: cubit,
       builder: (BuildContext context, TState localState) {
         if (localState is TValidState && (localState.id == idToCheck || idToCheck == null)) {
           return validRender(context, localState);
