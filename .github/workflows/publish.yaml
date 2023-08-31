@@ -5,13 +5,6 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: 'v'
 jobs:
   publish:
-    permissions:
-      id-token: write # Required for authentication using OIDC
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-      - name: Install dependencies
-        run: flutter pub get
-      - name: Publish
-        run: dart pub publish --force
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: 'pub.dev'
