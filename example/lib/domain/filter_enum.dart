@@ -1,0 +1,4 @@
+enum FilterEnum {
+  male,
+  female,
+}
