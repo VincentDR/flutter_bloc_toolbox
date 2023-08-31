@@ -25,9 +25,9 @@ class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshS
     }
     emit(MockFetchAndRefreshFetchingState(id: idToFetch));
 
-    PersonEntity? stats = await getObject(idToGet: idToFetch);
-    if (stats != null) {
-      directSet(stats);
+    PersonEntity? persons = await getObject(idToGet: idToFetch);
+    if (persons != null) {
+      directSet(persons);
     } else {
       emit(MockFetchAndRefreshFetchingErrorState(id: idToFetch));
     }
