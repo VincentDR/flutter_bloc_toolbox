@@ -8,8 +8,11 @@ part 'sort_enum_abstract_state.dart';
 /// Allow to switch between different sort_enum options
 abstract class SortEnumAbstractCubit<TEnum extends Enum, TState extends SortEnumAbstractState<TEnum>>
     extends Cubit<TState> {
-  late List<SortEntity<TEnum>> availableSorts;
-  late int defaultIndex;
+  /// All the sorts that can be used
+  late final List<SortEntity<TEnum>> availableSorts;
+
+  /// The default sort index (in availableSorts) to use
+  late final int defaultIndex;
 
   SortEnumAbstractCubit(
     super.initialState, {
