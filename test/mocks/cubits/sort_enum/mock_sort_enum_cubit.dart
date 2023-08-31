@@ -1,11 +1,11 @@
 import 'package:flutter_bloc_toolbox/entities/sort_entity.dart';
-import 'package:flutter_bloc_toolbox/logic/sorting/sort_abstract_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/sort_enum/sort_enum_abstract_cubit.dart';
 
-import '../enums/mock_enum.dart';
+import '../../enums/mock_enum.dart';
 
-part 'mock_sort_state.dart';
+part 'mock_sort_enum_state.dart';
 
-class MockSortCubit extends SortAbstractCubit<MockEnum, MockSortState> {
+class MockSortEnumCubit extends SortEnumAbstractCubit<MockEnum, MockSortEnumState> {
   static const List<SortEntity<MockEnum>> sortsToUse = [
     SortEntity<MockEnum>(
       ascendant: true,
@@ -33,17 +33,17 @@ class MockSortCubit extends SortAbstractCubit<MockEnum, MockSortState> {
     ),
   ];
 
-  MockSortCubit({
+  MockSortEnumCubit({
     super.availableSorts = sortsToUse,
     super.defaultIndex = 3,
   }) : super(
-          MockSortStateInitial(sortEntity: availableSorts.elementAt(defaultIndex)),
+          MockSortEnumInitialState(sortEntity: availableSorts.elementAt(defaultIndex)),
         ) {
     init(availableSorts: availableSorts, defaultIndex: defaultIndex);
   }
 
   @override
   emitChangedState(SortEntity<MockEnum> sortEntity) {
-    emit(MockSortStateChanged(sortEntity: sortEntity));
+    emit(MockSortEnumChangedState(sortEntity: sortEntity));
   }
 }

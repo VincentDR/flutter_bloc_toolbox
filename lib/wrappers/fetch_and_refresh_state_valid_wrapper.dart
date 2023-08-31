@@ -40,7 +40,7 @@ abstract class FetchAndRefreshStateValidWrapper<
         Widget toReturn = Center(
           child: Material(
             color: Colors.transparent,
-            child: localState is FetchAndRefreshFetchingState
+            child: (localState is FetchAndRefreshFetchingState || localState is FetchAndRefreshInitialState)
                 ? loadingRender?.call(context) ??
                     const Padding(
                       padding: EdgeInsets.all(5),

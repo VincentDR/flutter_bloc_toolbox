@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_toolbox/entities/sort_entity.dart';
 import 'package:meta/meta.dart';
 
-part 'sort_abstract_state.dart';
+part 'sort_enum_abstract_state.dart';
 
-/// Allow to switch between different sort options
-abstract class SortAbstractCubit<TEnum extends Enum, TState extends SortAbstractState<TEnum>> extends Cubit<TState> {
+/// Allow to switch between different sort_enum options
+abstract class SortEnumAbstractCubit<TEnum extends Enum, TState extends SortEnumAbstractState<TEnum>>
+    extends Cubit<TState> {
   late List<SortEntity<TEnum>> availableSorts;
   late int defaultIndex;
 
-  SortAbstractCubit(
+  SortEnumAbstractCubit(
     super.initialState, {
     required this.availableSorts,
     required this.defaultIndex,
