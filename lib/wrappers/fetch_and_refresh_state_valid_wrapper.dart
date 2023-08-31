@@ -11,6 +11,7 @@ abstract class FetchAndRefreshStateValidWrapper<
     TIdType,
     TType> extends StatelessWidget {
   final TIdType? idToCheck;
+  final TCubit? cubit;
   final Widget Function(BuildContext, TValidState) validRender;
   final Widget Function(BuildContext)? loadingRender;
   final Widget Function(BuildContext)? errorRender;
@@ -22,6 +23,7 @@ abstract class FetchAndRefreshStateValidWrapper<
   const FetchAndRefreshStateValidWrapper({
     super.key,
     this.idToCheck,
+    this.cubit,
     required this.validRender,
     this.loadingRender,
     this.errorRender,
@@ -32,6 +34,7 @@ abstract class FetchAndRefreshStateValidWrapper<
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TCubit, TState>(
+      bloc: cubit,
       builder: (BuildContext context, TState localState) {
         if (localState is TValidState && (localState.id == idToCheck || idToCheck == null)) {
           return validRender(context, localState);
