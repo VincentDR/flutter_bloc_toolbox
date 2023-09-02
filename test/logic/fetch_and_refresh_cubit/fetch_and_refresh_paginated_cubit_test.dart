@@ -9,6 +9,10 @@ import '../../mocks/cubits/fetch_and_refresh_cubit/mock_fetch_and_refresh_pagina
 import '../../mocks/fixtures/person_entity_fixture.dart';
 import '../../mocks/repositories/mock_repository.dart';
 
+typedef FetchAndRefreshPaginatedStateTest = FetchAndRefreshPaginatedState<String, PaginationEntity<PersonEntity>>;
+typedef FetchAndRefreshPaginatedCubitTest
+    = FetchAndRefreshPaginatedCubit<FetchAndRefreshPaginatedStateTest, String, PaginationEntity<PersonEntity>>;
+
 void main() {
   String idToGet = 'idToGet';
   PaginationEntity<PersonEntity> paginationEntity = PaginationEntity(
@@ -30,9 +34,135 @@ void main() {
     data: PersonEntityFixture.factory(idToGet).makeMany(60),
   );
   MockRepository<PersonEntity> personRepository = MocktailRepository<PersonEntity>();
+  getObjectTest({
+    required String idToGet,
+    bool loadMore = false,
+    bool getAll = false,
+    FetchAndRefreshPaginatedState? currentState,
+  }) async {
+    PaginationEntity<PersonEntity>? personsPaginationEntity;
+    if (loadMore && currentState is FetchAndRefreshPaginatedWithValueState) {
+      personsPaginationEntity = currentState.object;
+    }
+    PaginationEntity<PersonEntity>? persons = personsPaginationEntity != null
+        ? await personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: !getAll,
+            currentPaginationEntity: personsPaginationEntity,
+          )
+        : await personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: !getAll,
+          );
+
+    return persons;
+  }
 
   group('FetchAndRefreshPaginatedCubit', () {
     test('FetchAndRefreshPaginatedCubit initial state', () {
+      FetchAndRefreshPaginatedCubit fetchAndRefreshPaginatedCubit = FetchAndRefreshPaginatedCubitTest(
+        getObject: getObjectTest,
+      );
+
+      expect(
+        fetchAndRefreshPaginatedCubit.state is FetchAndRefreshInitialState,
+        true,
+      );
+    });
+
+    blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+      'FetchAndRefreshPaginatedCubit fetch and refresh success',
+      setUp: () {
+        when(
+          () => personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: true,
+            currentPaginationEntity: null,
+          ),
+        ).thenAnswer((_) async => paginationEntity);
+
+        when(
+          () => personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: true,
+            currentPaginationEntity: paginationEntity,
+          ),
+        ).thenAnswer((_) async => paginationEntityMore);
+      },
+      build: () => FetchAndRefreshPaginatedCubitTest(
+        getObject: getObjectTest,
+      ),
+      act: (cubit) async {
+        await cubit.fetch(idToFetch: idToGet);
+        await cubit.refresh();
+        await cubit.fetch(idToFetch: idToGet, loadMore: true);
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+        isA<FetchAndRefreshFetchingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshPaginatedMoreState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshPaginatedMoreSuccessState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntityMore,
+          'Change state',
+          true,
+        ),
+      ],
+    );
+
+    blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+      'FetchAndRefreshPaginatedCubit fetch error',
+      setUp: () => when(
+        () => personRepository.getPaginationObject(
+          idToGet,
+          onlyOnePage: true,
+          currentPaginationEntity: null,
+        ),
+      ).thenAnswer((_) async => null),
+      build: () => FetchAndRefreshPaginatedCubitTest(
+        getObject: getObjectTest,
+      ),
+      act: (cubit) async {
+        await cubit.fetch(idToFetch: idToGet);
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+        isA<FetchAndRefreshFetchingErrorState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+      ],
+    );
+  });
+
+  group('FetchAndRefreshPaginatedCubit extended', () {
+    test('FetchAndRefreshPaginatedCubit extended initial state', () {
       FetchAndRefreshPaginatedCubit fetchAndRefreshPaginatedCubit = MockFetchAndRefreshPaginatedCubit(personRepository);
 
       expect(
@@ -43,7 +173,7 @@ void main() {
     });
 
     blocTest<MockFetchAndRefreshPaginatedCubit, MockFetchAndRefreshPaginatedState>(
-      'FetchAndRefreshPaginatedCubit fetch and refresh success',
+      'FetchAndRefreshPaginatedCubit extended fetch and refresh success',
       setUp: () {
         when(
           () => personRepository.getPaginationObject(
@@ -102,7 +232,7 @@ void main() {
     );
 
     blocTest<MockFetchAndRefreshPaginatedCubit, MockFetchAndRefreshPaginatedState>(
-      'FetchAndRefreshPaginatedCubit fetch error',
+      'FetchAndRefreshPaginatedCubit extended fetch error',
       setUp: () => when(
         () => personRepository.getPaginationObject(
           idToGet,

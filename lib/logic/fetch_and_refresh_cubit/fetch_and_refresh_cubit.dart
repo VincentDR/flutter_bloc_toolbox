@@ -14,11 +14,11 @@ class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, 
   @protected
   Future<TType?> getObject({required TIdType idToGet}) async => fetchObject(idToGet: idToGet);
 
-  FetchAndRefreshCubit(
-    TState initialState, {
+  FetchAndRefreshCubit({
+    TState? initialState,
     required Future<TType?> Function({required TIdType idToGet}) getObject,
   })  : fetchObject = getObject,
-        super(initialState);
+        super(initialState ?? FetchAndRefreshInitialState<TIdType, TType>() as TState);
 
   //#region States creation
   @mustBeOverridden

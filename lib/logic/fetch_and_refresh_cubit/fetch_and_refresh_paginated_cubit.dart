@@ -22,57 +22,67 @@ class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPaginatedState
         currentState: currentState,
       );
 
-  FetchAndRefreshPaginatedCubit(
-    TState initialState, {
+  FetchAndRefreshPaginatedCubit({
+    TState? initialState,
     required Future<TType?> Function({
       required TIdType idToGet,
       bool loadMore,
       bool getAll,
     })
         super.getObject,
-  }) : super(initialState);
+  }) : super(initialState: initialState ?? FetchAndRefreshPaginatedInitialState<TIdType, TType>() as TState);
 
   //#region States creation
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshInitialState<TIdType, TType> createInitialState() => FetchAndRefreshInitialState<TIdType, TType>();
+  FetchAndRefreshPaginatedInitialState<TIdType, TType> createInitialState() =>
+      FetchAndRefreshPaginatedInitialState<TIdType, TType>();
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshFetchingState<TIdType, TType> createFetchingState(TIdType id) =>
-      FetchAndRefreshFetchingState<TIdType, TType>(id: id);
+  FetchAndRefreshPaginatedFetchingState<TIdType, TType> createFetchingState(TIdType id) =>
+      FetchAndRefreshPaginatedFetchingState<TIdType, TType>(id: id);
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshFetchingErrorState<TIdType, TType> createFetchedErrorState(TIdType id) =>
-      FetchAndRefreshFetchingErrorState<TIdType, TType>(id: id);
+  FetchAndRefreshPaginatedFetchingErrorState<TIdType, TType> createFetchedErrorState(TIdType id) =>
+      FetchAndRefreshPaginatedFetchingErrorState<TIdType, TType>(id: id);
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshFetchingSuccessState<TIdType, TType> createFetchedSuccessState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshFetchingSuccessState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshPaginatedFetchingSuccessState<TIdType, TType> createFetchedSuccessState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshPaginatedFetchingSuccessState<TIdType, TType>(id: id, object: objectToSet);
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshRefreshingState<TIdType, TType> createRefreshingState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshPaginatedRefreshingState<TIdType, TType> createRefreshingState(TIdType id, TType objectToSet) =>
+      FetchAndRefreshPaginatedRefreshingState<TIdType, TType>(id: id, object: objectToSet);
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshRefreshingSuccessState<TIdType, TType> createRefreshedSuccessState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingSuccessState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshPaginatedRefreshingSuccessState<TIdType, TType> createRefreshedSuccessState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshPaginatedRefreshingSuccessState<TIdType, TType>(id: id, object: objectToSet);
 
   @mustBeOverridden
   @protected
   @override
-  FetchAndRefreshRefreshingErrorState<TIdType, TType> createRefreshedErrorState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingErrorState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshPaginatedRefreshingErrorState<TIdType, TType> createRefreshedErrorState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshPaginatedRefreshingErrorState<TIdType, TType>(id: id, object: objectToSet);
 
   @mustBeOverridden
   @protected

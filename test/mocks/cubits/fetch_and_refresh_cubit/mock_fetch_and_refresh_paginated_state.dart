@@ -21,7 +21,7 @@ sealed class MockFetchAndRefreshPaginatedWithIdState extends MockFetchAndRefresh
 }
 
 sealed class MockFetchAndRefreshPaginatedWithValueState extends MockFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshWithValueState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedWithValueState<String, PaginationEntity<PersonEntity>> {
   @override
   final PaginationEntity<PersonEntity> object;
 
@@ -37,17 +37,17 @@ sealed class MockFetchAndRefreshPaginatedWithValueState extends MockFetchAndRefr
 }
 
 class MockFetchAndRefreshPaginatedInitialState extends MockFetchAndRefreshPaginatedState
-    implements FetchAndRefreshInitialState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedInitialState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedInitialState() : super();
 }
 
 class MockFetchAndRefreshPaginatedFetchingState extends MockFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshFetchingState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedFetchingState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedFetchingState({required super.id});
 }
 
 class MockFetchAndRefreshPaginatedFetchingSuccessState extends MockFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshFetchingSuccessState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedFetchingSuccessState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedFetchingSuccessState({
     required super.object,
     required super.id,
@@ -55,12 +55,12 @@ class MockFetchAndRefreshPaginatedFetchingSuccessState extends MockFetchAndRefre
 }
 
 class MockFetchAndRefreshPaginatedFetchingErrorState extends MockFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshFetchingErrorState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedFetchingErrorState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedFetchingErrorState({required super.id});
 }
 
 class MockFetchAndRefreshPaginatedRefreshingState extends MockFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedRefreshingState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedRefreshingState({
     required super.object,
     required super.id,
@@ -68,7 +68,7 @@ class MockFetchAndRefreshPaginatedRefreshingState extends MockFetchAndRefreshPag
 }
 
 class MockFetchAndRefreshPaginatedRefreshingSuccessState extends MockFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingSuccessState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedRefreshingSuccessState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedRefreshingSuccessState({
     required super.object,
     required super.id,
@@ -76,7 +76,7 @@ class MockFetchAndRefreshPaginatedRefreshingSuccessState extends MockFetchAndRef
 }
 
 class MockFetchAndRefreshPaginatedRefreshingErrorState extends MockFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingErrorState<String, PaginationEntity<PersonEntity>> {
+    implements FetchAndRefreshPaginatedRefreshingErrorState<String, PaginationEntity<PersonEntity>> {
   const MockFetchAndRefreshPaginatedRefreshingErrorState({
     required super.object,
     required super.id,

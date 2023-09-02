@@ -15,7 +15,7 @@ class MockFetchAndRefreshPaginatedCubit
 
   MockFetchAndRefreshPaginatedCubit(this.mockRepository)
       : super(
-          const MockFetchAndRefreshPaginatedInitialState(),
+          initialState: const MockFetchAndRefreshPaginatedInitialState(),
           getObject: ({
             required String idToGet,
             bool loadMore = false,

@@ -12,7 +12,7 @@ class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshS
 
   MockFetchAndRefreshCubit(this.personRepository)
       : super(
-          const MockFetchAndRefreshInitialState(),
+          initialState: const MockFetchAndRefreshInitialState(),
           getObject: ({required String idToGet}) => personRepository.getObject(idToGet),
         );
 
