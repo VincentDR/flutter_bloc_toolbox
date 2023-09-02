@@ -36,13 +36,13 @@ export 'logic/fetch_and_refresh_cubit/fetch_and_refresh_paginated_cubit.dart'
         FetchAndRefreshPaginatedMoreErrorState,
         FetchAndRefreshPaginatedMoreState,
         FetchAndRefreshPaginatedMoreSuccessState;
-export 'logic/filter_enum/filter_enum_abstract_cubit.dart'
+export 'logic/filter_enum/filter_enum_cubit.dart'
     show
-        FilterEnumAbstractCubit,
-        FilterEnumAbstractState,
-        FilterEnumAbstractDefaultFilterState,
-        FilterEnumAbstractFilteredState,
-        FilterEnumAbstractInitialState;
+        FilterEnumCubit,
+        FilterEnumState,
+        FilterEnumDefaultFilterState,
+        FilterEnumFilteredState,
+        FilterEnumInitialState;
 export 'logic/search_text/search_text_cubit.dart'
     show SearchTextCubit, SearchTextState, SearchTextUpdatedState, SearchTextInitialState;
 export 'logic/sort_enum/sort_enum_cubit.dart'

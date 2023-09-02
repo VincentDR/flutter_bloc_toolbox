@@ -6,39 +6,43 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../mocks/cubits/sort_enum/mock_sort_enum_cubit.dart';
 import '../../mocks/enums/mock_enum.dart';
 
+typedef SortEnumTest = SortEnumEntity<MockEnum>;
+typedef SortState = SortEnumState<MockEnum>;
+typedef SortCubit = SortEnumCubit<MockEnum, SortState>;
+
 void main() {
   group('SortEnumCubit with correct state', () {
-    List<SortEnumEntity<MockEnum>> availableSorts = const [
-      SortEnumEntity<MockEnum>(
+    List<SortEnumTest> availableSorts = const [
+      SortEnumTest(
         ascendant: true,
         value: MockEnum.mock1,
       ),
-      SortEnumEntity<MockEnum>(
+      SortEnumTest(
         ascendant: false,
         value: MockEnum.mock1,
       ),
-      SortEnumEntity<MockEnum>(
+      SortEnumTest(
         ascendant: true,
         value: MockEnum.mock2,
       ),
-      SortEnumEntity<MockEnum>(
+      SortEnumTest(
         ascendant: false,
         value: MockEnum.mock3,
       ),
-      SortEnumEntity<MockEnum>(
+      SortEnumTest(
         ascendant: true,
         value: MockEnum.mock4,
       ),
-      SortEnumEntity<MockEnum>(
+      SortEnumTest(
         ascendant: false,
         value: MockEnum.mock4,
       ),
     ];
     int defaultIndex = 2;
 
-    blocTest<SortEnumCubit<MockEnum, SortEnumState<MockEnum>>, SortEnumState<MockEnum>>(
+    blocTest<SortEnumCubit<MockEnum, SortState>, SortState>(
       'SortEnumCubit initial and same sort changed',
-      build: () => SortEnumCubit<MockEnum, SortEnumState<MockEnum>>(
+      build: () => SortCubit(
         SortEnumInitialState(
           sortEntity: availableSorts.elementAt(defaultIndex),
         ),
@@ -52,9 +56,9 @@ void main() {
       expect: () => [],
     );
 
-    blocTest<SortEnumCubit<MockEnum, SortEnumState<MockEnum>>, SortEnumState<MockEnum>>(
+    blocTest<SortEnumCubit<MockEnum, SortState>, SortState>(
       'SortEnumCubit change state',
-      build: () => SortEnumCubit<MockEnum, SortEnumState<MockEnum>>(
+      build: () => SortCubit(
         SortEnumInitialState(
           sortEntity: availableSorts.elementAt(defaultIndex),
         ),
