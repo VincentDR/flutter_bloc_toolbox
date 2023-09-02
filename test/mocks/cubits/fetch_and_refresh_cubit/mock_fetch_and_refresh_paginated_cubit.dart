@@ -13,115 +13,94 @@ class MockFetchAndRefreshPaginatedCubit
     extends FetchAndRefreshPaginatedCubit<MockFetchAndRefreshPaginatedState, String, PaginationEntity<PersonEntity>> {
   final MockRepository<PersonEntity> mockRepository;
 
-  MockFetchAndRefreshPaginatedCubit(this.mockRepository) : super(const MockFetchAndRefreshPaginatedInitialState());
+  MockFetchAndRefreshPaginatedCubit(this.mockRepository)
+      : super(
+          const MockFetchAndRefreshPaginatedInitialState(),
+          getObject: ({
+            required String idToGet,
+            bool loadMore = false,
+            bool getAll = false,
+            MockFetchAndRefreshPaginatedState? currentState,
+          }) async {
+            PaginationEntity<PersonEntity>? personsPaginationEntity;
+            if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
+              personsPaginationEntity = currentState.persons;
+            }
+            PaginationEntity<PersonEntity>? persons = personsPaginationEntity != null
+                ? await mockRepository.getPaginationObject(
+                    idToGet,
+                    onlyOnePage: !getAll,
+                    currentPaginationEntity: personsPaginationEntity,
+                  )
+                : await mockRepository.getPaginationObject(
+                    idToGet,
+                    onlyOnePage: !getAll,
+                  );
+
+            return persons;
+          },
+        );
+
+  //#region States creation
 
   @override
-  void directSet(PaginationEntity<PersonEntity> objectToSet, {String id = '', bool loadMore = false}) {
-    if (loadMore) {
-      emit(MockFetchAndRefreshPaginatedFetchingMoreSuccessState(object: objectToSet, id: id));
-    } else {
-      emit(MockFetchAndRefreshPaginatedFetchingSuccessState(object: objectToSet, id: id));
-    }
-  }
+  MockFetchAndRefreshPaginatedInitialState createInitialState() => const MockFetchAndRefreshPaginatedInitialState();
 
   @override
-  Future<void> fetch({required String idToFetch, bool loadMore = false, bool getAll = false}) async {
-    MockFetchAndRefreshPaginatedState currentState = state;
-    if (currentState is MockFetchAndRefreshPaginatedFetchingState && currentState.id == idToFetch) {
-      return;
-    }
-
-    if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
-      emit(MockFetchAndRefreshPaginatedFetchingMoreState(object: currentState.persons, id: idToFetch));
-    } else {
-      emit(MockFetchAndRefreshPaginatedFetchingState(id: idToFetch));
-    }
-
-    PaginationEntity<PersonEntity>? persons = await getObject(idToGet: idToFetch, loadMore: loadMore);
-    if (persons != null) {
-      directSet(
-        persons,
-        id: idToFetch,
-        loadMore: loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState,
-      );
-    } else {
-      if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
-        emit(MockFetchAndRefreshPaginatedFetchingMoreErrorState(object: currentState.persons, id: idToFetch));
-      } else {
-        emit(MockFetchAndRefreshPaginatedFetchingErrorState(id: idToFetch));
-      }
-    }
-  }
+  MockFetchAndRefreshPaginatedFetchingState createFetchingState(String id) =>
+      MockFetchAndRefreshPaginatedFetchingState(id: id);
 
   @override
-  @protected
-  Future<PaginationEntity<PersonEntity>?> getObject({
-    required String idToGet,
-    bool loadMore = false,
-    bool getAll = false,
-  }) async {
-    MockFetchAndRefreshPaginatedState currentState = state;
-    PaginationEntity<PersonEntity>? personsPaginationEntity;
-    if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
-      personsPaginationEntity = currentState.persons;
-    }
-    PaginationEntity<PersonEntity>? persons = personsPaginationEntity != null
-        ? await mockRepository.getPaginationObject(
-            idToGet,
-            onlyOnePage: !getAll,
-            currentPaginationEntity: personsPaginationEntity,
-          )
-        : await mockRepository.getPaginationObject(
-            idToGet,
-            onlyOnePage: !getAll,
-          );
-
-    return persons;
-  }
+  MockFetchAndRefreshPaginatedFetchingErrorState createFetchedErrorState(String id) =>
+      MockFetchAndRefreshPaginatedFetchingErrorState(id: id);
 
   @override
-  Future<void> refresh() async {
-    MockFetchAndRefreshPaginatedState currentState = state;
-    if (currentState is! MockFetchAndRefreshPaginatedWithIdState) {
-      return;
-    }
-
-    if (currentState is MockFetchAndRefreshPaginatedRefreshingState) {
-      return;
-    }
-
-    if (currentState is! MockFetchAndRefreshPaginatedWithValueState) {
-      fetch(idToFetch: currentState.id);
-      return;
-    }
-
-    emit(
-      MockFetchAndRefreshPaginatedRefreshingState(
-        object: currentState.object,
-        id: currentState.id,
-      ),
-    );
-
-    PaginationEntity<PersonEntity>? persons = await getObject(idToGet: currentState.id);
-    if (persons != null) {
-      emit(
-        MockFetchAndRefreshPaginatedRefreshingSuccessState(
-          object: persons,
-          id: currentState.id,
-        ),
-      );
-    } else {
-      emit(
-        MockFetchAndRefreshPaginatedRefreshingErrorState(
-          object: currentState.object,
-          id: currentState.id,
-        ),
-      );
-    }
-  }
+  MockFetchAndRefreshPaginatedFetchingSuccessState createFetchedSuccessState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedFetchingSuccessState(id: id, object: objectToSet);
 
   @override
-  void reset() {
-    emit(const MockFetchAndRefreshPaginatedInitialState());
-  }
+  MockFetchAndRefreshPaginatedRefreshingState createRefreshingState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedRefreshingState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshPaginatedRefreshingSuccessState createRefreshedSuccessState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedRefreshingSuccessState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshPaginatedRefreshingErrorState createRefreshedErrorState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedRefreshingErrorState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshPaginatedFetchingMoreState createFetchingPaginatedMoreState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedFetchingMoreState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshPaginatedFetchingMoreSuccessState createFetchingPaginatedMoreSuccessState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedFetchingMoreSuccessState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshPaginatedFetchingMoreErrorState createFetchingPaginatedMoreErrorState(
+    String id,
+    PaginationEntity<PersonEntity> objectToSet,
+  ) =>
+      MockFetchAndRefreshPaginatedFetchingMoreErrorState(id: id, object: objectToSet);
+//#endregion States creation
 }
