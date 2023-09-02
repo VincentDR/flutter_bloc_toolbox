@@ -24,14 +24,13 @@ class SortEnumCubit<TEnum extends Enum, TState extends SortEnumState<TEnum>> ext
 
   @mustBeOverridden
   @protected
-  emitChangedState(SortEnumEntity<TEnum> sortEntity) {
-    emit(SortEnumChangedState(sortEntity: sortEntity) as TState);
-  }
+  SortEnumChangedState<TEnum> createChangedState(SortEnumEntity<TEnum> sortEntity) =>
+      SortEnumChangedState(sortEntity: sortEntity);
 
   /// Prevents same sort to be used from initial to changed
   _checkIsAlreadySet(SortEnumEntity<TEnum> sortEntity) {
     if (state.sortEntity != sortEntity) {
-      emitChangedState(sortEntity);
+      emit(createChangedState(sortEntity) as TState);
     }
   }
 

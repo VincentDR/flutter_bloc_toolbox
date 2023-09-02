@@ -25,15 +25,15 @@ class MockFilterEnumCubit extends FilterEnumCubit<MockEnum, MockFilterEnumEntity
 
   @override
   @protected
-  emitFilteredState(
+  MockFilterFilteredState createFilteredState(
     List<MockFilterEnumEntity> filters,
   ) =>
-      emit(MockFilterFilteredState(filters));
+      MockFilterFilteredState(filters);
 
   @override
   @protected
-  emitDefaultState(
+  MockFilterDefaultFilterState createDefaultState(
     List<MockFilterEnumEntity> filters,
   ) =>
-      emit(MockFilterDefaultFilterState(filters));
+      MockFilterDefaultFilterState(filters);
 }

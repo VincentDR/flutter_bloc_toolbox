@@ -41,7 +41,6 @@ class MockSortEnumCubit extends SortEnumCubit<MockEnum, MockSortEnumState> {
         );
 
   @override
-  emitChangedState(SortEnumEntity<MockEnum> sortEntity) {
-    emit(MockSortEnumChangedState(sortEntity: sortEntity));
-  }
+  MockSortEnumChangedState createChangedState(SortEnumEntity<MockEnum> sortEntity) =>
+      MockSortEnumChangedState(sortEntity: sortEntity);
 }

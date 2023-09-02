@@ -9,10 +9,12 @@ part 'search_text_state.dart';
 class SearchTextCubit extends Cubit<SearchTextState> with CubitPreventsEmitOnClosed<SearchTextState> {
   SearchTextCubit() : super(const SearchTextInitialState());
 
+  /// Emit a state with new searchText
   setText(String searchText) {
     emit(SearchTextUpdatedState(searchText: searchText));
   }
 
+  /// Emit a state without text
   eraseText() {
     emit(const SearchTextUpdatedState());
   }
