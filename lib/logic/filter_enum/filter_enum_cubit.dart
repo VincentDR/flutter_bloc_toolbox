@@ -4,17 +4,17 @@ import 'package:flutter_bloc_toolbox/common/mixins/cubit.dart';
 import 'package:flutter_bloc_toolbox/entities/filter_enum_entity.dart';
 import 'package:meta/meta.dart';
 
-part 'filter_enum_abstract_state.dart';
+part 'filter_enum_state.dart';
 
 /// Manage a list of filters, picked or not
-abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEntity<TEnum>,
-        TState extends FilterEnumAbstractState<TEnum, TFilterEnumEntity>> extends Cubit<TState>
+class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEntity<TEnum>,
+        TState extends FilterEnumState<TEnum, TFilterEnumEntity>> extends Cubit<TState>
     with CubitPreventsEmitOnClosed<TState> {
   final List<TEnum> enumValues;
   final TFilterEnumEntity Function(TEnum, bool) enumBuilder;
   final bool Function(TEnum) selectedByDefault;
 
-  FilterEnumAbstractCubit(
+  FilterEnumCubit(
     super.initialState, {
     required this.enumValues,
     required this.enumBuilder,
@@ -23,24 +23,18 @@ abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity ext
 
   @mustBeOverridden
   @protected
-  filteredState(List<TFilterEnumEntity> filters);
+  FilterEnumFilteredState<TEnum, TFilterEnumEntity> createFilteredState(List<TFilterEnumEntity> filters) =>
+      FilterEnumFilteredState<TEnum, TFilterEnumEntity>(filters);
 
   @mustBeOverridden
   @protected
-  defaultState(List<TFilterEnumEntity> filters);
+  FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity> createDefaultState(List<TFilterEnumEntity> filters) =>
+      FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity>(filters);
 
-  reset() => emit(
-        defaultState(
-          enumValues.fold(
-            [],
-            (previousValue, element) => previousValue..add(enumBuilder(element, selectedByDefault(element))),
-          ),
-        ),
-      );
-
+  /// Change the picked value of a single TFilterEnumEntity, corresponding to the TEnum
   toggleEnum(TEnum toggledEnum) {
     emit(
-      filteredState(
+      createFilteredState(
         List<TFilterEnumEntity>.generate(
           state.filters.length,
           (index) {
@@ -55,34 +49,37 @@ abstract class FilterEnumAbstractCubit<TEnum extends Enum, TFilterEnumEntity ext
             }
           },
         ),
-      ),
+      ) as TState,
     );
   }
 
+  /// Change the current filters from a list
   setFiltersFromList(List<TFilterEnumEntity> possibleEnums) {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = possibleEnums.where((element) => element.filterEnum == model).firstOrNull?.picked ?? false;
       newFilters.insert(0, enumBuilder(model, mustBePicked));
     }
-    emit(filteredState(newFilters));
+    emit(createFilteredState(newFilters) as TState);
   }
 
+  /// Set the filters by default
   setDefaultFilters() {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = selectedByDefault(model);
       newFilters.insert(0, enumBuilder(model, mustBePicked));
     }
-    emit(defaultState(newFilters));
+    emit(createDefaultState(newFilters) as TState);
   }
 
+  /// Set the filters based on a list of picked TEnum
   setFilterFromPicked(List<TEnum> selectedFilters) {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = selectedFilters.contains(model);
       newFilters.insert(0, enumBuilder(model, mustBePicked));
     }
-    emit(filteredState(newFilters));
+    emit(createFilteredState(newFilters) as TState);
   }
 }

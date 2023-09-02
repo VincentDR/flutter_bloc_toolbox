@@ -10,76 +10,38 @@ part 'mock_fetch_and_refresh_state.dart';
 class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshState, String, PersonEntity> {
   final MockRepository<PersonEntity> personRepository;
 
-  MockFetchAndRefreshCubit(this.personRepository) : super(const MockFetchAndRefreshInitialState());
+  MockFetchAndRefreshCubit(this.personRepository)
+      : super(
+          initialState: const MockFetchAndRefreshInitialState(),
+          getObject: ({required String idToGet}) => personRepository.getObject(idToGet),
+        );
+
+  //#region States creation
+  @override
+  MockFetchAndRefreshInitialState createInitialState() => const MockFetchAndRefreshInitialState();
 
   @override
-  void directSet(PersonEntity objectToSet) {
-    emit(MockFetchAndRefreshFetchingSuccessState(id: objectToSet.id, object: objectToSet));
-  }
+  MockFetchAndRefreshFetchingState createFetchingState(String id) => MockFetchAndRefreshFetchingState(id: id);
 
   @override
-  Future<void> fetch({required String idToFetch}) async {
-    MockFetchAndRefreshState currentState = state;
-    if (currentState is MockFetchAndRefreshFetchingState && currentState.id == idToFetch) {
-      return;
-    }
-    emit(MockFetchAndRefreshFetchingState(id: idToFetch));
-
-    PersonEntity? persons = await getObject(idToGet: idToFetch);
-    if (persons != null) {
-      directSet(persons);
-    } else {
-      emit(MockFetchAndRefreshFetchingErrorState(id: idToFetch));
-    }
-  }
+  MockFetchAndRefreshFetchingErrorState createFetchedErrorState(String id) =>
+      MockFetchAndRefreshFetchingErrorState(id: id);
 
   @override
-  @protected
-  Future<PersonEntity?> getObject({required String idToGet}) => personRepository.getObject(idToGet);
+  MockFetchAndRefreshFetchingSuccessState createFetchedSuccessState(String id, PersonEntity objectToSet) =>
+      MockFetchAndRefreshFetchingSuccessState(id: id, object: objectToSet);
 
   @override
-  Future<void> refresh() async {
-    MockFetchAndRefreshState currentState = state;
-    if (currentState is! MockFetchAndRefreshWithIdState) {
-      return;
-    }
-
-    if (currentState is MockFetchAndRefreshRefreshingState) {
-      return;
-    }
-
-    if (currentState is! MockFetchAndRefreshWithValueState) {
-      fetch(idToFetch: currentState.id);
-      return;
-    }
-
-    emit(
-      MockFetchAndRefreshRefreshingState(
-        id: currentState.id,
-        object: currentState.object,
-      ),
-    );
-
-    PersonEntity? stats = await getObject(idToGet: currentState.id);
-    if (stats != null) {
-      emit(
-        MockFetchAndRefreshRefreshingSuccessState(
-          id: currentState.id,
-          object: stats,
-        ),
-      );
-    } else {
-      emit(
-        MockFetchAndRefreshRefreshingErrorState(
-          id: currentState.id,
-          object: currentState.object,
-        ),
-      );
-    }
-  }
+  MockFetchAndRefreshRefreshingState createRefreshingState(String id, PersonEntity objectToSet) =>
+      MockFetchAndRefreshRefreshingState(id: id, object: objectToSet);
 
   @override
-  void reset() {
-    emit(const MockFetchAndRefreshInitialState());
-  }
+  MockFetchAndRefreshRefreshingSuccessState createRefreshedSuccessState(String id, PersonEntity objectToSet) =>
+      MockFetchAndRefreshRefreshingSuccessState(id: id, object: objectToSet);
+
+  @override
+  MockFetchAndRefreshRefreshingErrorState createRefreshedErrorState(String id, PersonEntity objectToSet) =>
+      MockFetchAndRefreshRefreshingErrorState(id: id, object: objectToSet);
+
+  //#endregion States creation
 }

@@ -9,7 +9,13 @@ part 'bool_state.dart';
 class BoolCubit extends Cubit<BoolState> with CubitPreventsEmitOnClosed<BoolState> {
   BoolCubit({bool initialValue = false}) : super(BoolInitialState(value: initialValue));
 
+  /// Used to emit a new bool state
   changeValue(bool newValue) {
     emit(BoolChangedState(value: newValue));
+  }
+
+  /// Emit state with !value
+  toggleValue() {
+    emit(BoolChangedState(value: !state.value));
   }
 }

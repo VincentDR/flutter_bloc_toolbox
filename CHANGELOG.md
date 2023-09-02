@@ -1,3 +1,8 @@
+## 0.0.6
+
+Cleaner code
+More tests
+
 ## 0.0.5
 
 Basic example

@@ -1,40 +1,37 @@
 import 'package:example/domain/sort_enum.dart';
-import 'package:flutter_bloc_toolbox/entities/sort_entity.dart';
-import 'package:flutter_bloc_toolbox/logic/sort_enum/sort_enum_abstract_cubit.dart';
+import 'package:flutter_bloc_toolbox/entities/sort_enum_entity.dart';
+import 'package:flutter_bloc_toolbox/logic/sort_enum/sort_enum_cubit.dart';
 
 part 'sort_enum_state.dart';
 
-class SortEnumCubit extends SortEnumAbstractCubit<SortEnum, SortEnumState> {
-  static const List<SortEntity<SortEnum>> sortsToUse = [
-    SortEntity<SortEnum>(
+class SortEnumCubitExample extends SortEnumCubit<SortEnum, SortEnumStateExample> {
+  static const List<SortEnumEntity<SortEnum>> sortsToUse = [
+    SortEnumEntity<SortEnum>(
       ascendant: true,
       value: SortEnum.fistName,
     ),
-    SortEntity<SortEnum>(
+    SortEnumEntity<SortEnum>(
       ascendant: false,
       value: SortEnum.fistName,
     ),
-    SortEntity<SortEnum>(
+    SortEnumEntity<SortEnum>(
       ascendant: true,
       value: SortEnum.lastName,
     ),
-    SortEntity<SortEnum>(
+    SortEnumEntity<SortEnum>(
       ascendant: false,
       value: SortEnum.lastName,
     ),
   ];
 
-  SortEnumCubit({
+  SortEnumCubitExample({
     super.availableSorts = sortsToUse,
     super.defaultIndex = 0,
   }) : super(
-          SortEnumInitialState(sortEntity: availableSorts.elementAt(defaultIndex)),
-        ) {
-    init(availableSorts: availableSorts, defaultIndex: defaultIndex);
-  }
+          SortEnumInitialStateExample(sortEntity: availableSorts.elementAt(defaultIndex)),
+        );
 
   @override
-  emitChangedState(SortEntity<SortEnum> sortEntity) {
-    emit(SortEnumChangedState(sortEntity: sortEntity));
-  }
+  SortEnumChangedStateExample createChangedState(SortEnumEntity<SortEnum> sortEntity) =>
+      SortEnumChangedStateExample(sortEntity: sortEntity);
 }

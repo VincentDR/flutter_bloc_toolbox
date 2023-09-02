@@ -8,7 +8,7 @@ export 'common/mixins/cubit.dart' show CubitPreventsEmitOnClosed;
 //#region Entities
 export 'entities/filter_enum_entity.dart' show FilterEnumEntity;
 export 'entities/pagination_entity.dart' show PaginationEntity;
-export 'entities/sort_entity.dart' show SortEntity;
+export 'entities/sort_enum_entity.dart' show SortEnumEntity;
 //#endregion Entities
 
 //#region Logic
@@ -36,17 +36,17 @@ export 'logic/fetch_and_refresh_cubit/fetch_and_refresh_paginated_cubit.dart'
         FetchAndRefreshPaginatedMoreErrorState,
         FetchAndRefreshPaginatedMoreState,
         FetchAndRefreshPaginatedMoreSuccessState;
-export 'logic/filter_enum/filter_enum_abstract_cubit.dart'
+export 'logic/filter_enum/filter_enum_cubit.dart'
     show
-        FilterEnumAbstractCubit,
-        FilterEnumAbstractState,
-        FilterEnumAbstractDefaultFilterState,
-        FilterEnumAbstractFilteredState,
-        FilterEnumAbstractInitialState;
+        FilterEnumCubit,
+        FilterEnumState,
+        FilterEnumDefaultFilterState,
+        FilterEnumFilteredState,
+        FilterEnumInitialState;
 export 'logic/search_text/search_text_cubit.dart'
     show SearchTextCubit, SearchTextState, SearchTextUpdatedState, SearchTextInitialState;
-export 'logic/sort_enum/sort_enum_abstract_cubit.dart'
-    show SortEnumAbstractCubit, SortEnumAbstractState, SortEnumAbstractChangedState, SortEnumAbstractInitialState;
+export 'logic/sort_enum/sort_enum_cubit.dart'
+    show SortEnumCubit, SortEnumState, SortEnumChangedState, SortEnumInitialState;
 //#endregion Logic
 
 //#region Wrappers

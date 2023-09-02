@@ -1,4 +1,4 @@
-import 'package:flutter_bloc_toolbox/logic/filter_enum/filter_enum_abstract_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/filter_enum/filter_enum_cubit.dart';
 import 'package:meta/meta.dart';
 
 import '../../enums/mock_enum.dart';
@@ -6,7 +6,7 @@ import 'mock_filter_enum_entity.dart';
 
 part 'mock_filter_enum_state.dart';
 
-class MockFilterEnumCubit extends FilterEnumAbstractCubit<MockEnum, MockFilterEnumEntity, MockFilterEnumState> {
+class MockFilterEnumCubit extends FilterEnumCubit<MockEnum, MockFilterEnumEntity, MockFilterEnumState> {
   MockFilterEnumCubit(bool Function(MockEnum) selectedByDefault)
       : super(
           MockFilterInitialState(
@@ -25,14 +25,14 @@ class MockFilterEnumCubit extends FilterEnumAbstractCubit<MockEnum, MockFilterEn
 
   @override
   @protected
-  MockFilterFilteredState filteredState(
+  MockFilterFilteredState createFilteredState(
     List<MockFilterEnumEntity> filters,
   ) =>
       MockFilterFilteredState(filters);
 
   @override
   @protected
-  MockFilterDefaultFilterState defaultState(
+  MockFilterDefaultFilterState createDefaultState(
     List<MockFilterEnumEntity> filters,
   ) =>
       MockFilterDefaultFilterState(filters);

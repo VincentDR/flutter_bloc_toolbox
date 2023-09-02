@@ -1,18 +1,24 @@
 /// Paginated data
 class PaginationEntity<T> {
-  // Number of elements already fetched
+  /// Number of elements already fetched
   final int count;
-  // Number of elements available
+
+  /// Number of elements available
   final int total;
-  // Last and current page fetched
+
+  /// Last and current page fetched
   final int currentPageNumber;
-  // Number of available pages to fetch
+
+  /// Number of available pages to fetch
   final int totalPage;
-  // Number of element fetched on this page
+
+  /// Number of element fetched on this page
   final int pageSize;
-  // Another page available
+
+  /// Another page is available
   final bool hasMore;
-  // The fetched data
+
+  /// The fetched data
   final Iterable<T> data;
 
   const PaginationEntity({

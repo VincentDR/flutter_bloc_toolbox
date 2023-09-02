@@ -10,7 +10,7 @@ sealed class PersonsFetchAndRefreshPaginatedState extends Equatable
 }
 
 sealed class PersonsFetchAndRefreshPaginatedWithIdState extends PersonsFetchAndRefreshPaginatedState
-    implements FetchAndRefreshWithIdState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedWithIdState<String, PaginationPersonEntity> {
   @override
   final String id;
 
@@ -21,7 +21,7 @@ sealed class PersonsFetchAndRefreshPaginatedWithIdState extends PersonsFetchAndR
 }
 
 sealed class PersonsFetchAndRefreshPaginatedWithValueState extends PersonsFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshWithValueState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedWithValueState<String, PaginationPersonEntity> {
   @override
   final PaginationPersonEntity object;
 
@@ -37,17 +37,17 @@ sealed class PersonsFetchAndRefreshPaginatedWithValueState extends PersonsFetchA
 }
 
 class PersonsFetchAndRefreshPaginatedInitialState extends PersonsFetchAndRefreshPaginatedState
-    implements FetchAndRefreshInitialState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedInitialState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedInitialState() : super();
 }
 
 class PersonsFetchAndRefreshPaginatedFetchingState extends PersonsFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshFetchingState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedFetchingState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedFetchingState({required super.id});
 }
 
 class PersonsFetchAndRefreshPaginatedFetchingSuccessState extends PersonsFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshFetchingSuccessState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedFetchingSuccessState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedFetchingSuccessState({
     required super.object,
     required super.id,
@@ -55,12 +55,12 @@ class PersonsFetchAndRefreshPaginatedFetchingSuccessState extends PersonsFetchAn
 }
 
 class PersonsFetchAndRefreshPaginatedFetchingErrorState extends PersonsFetchAndRefreshPaginatedWithIdState
-    implements FetchAndRefreshFetchingErrorState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedFetchingErrorState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedFetchingErrorState({required super.id});
 }
 
 class PersonsFetchAndRefreshPaginatedRefreshingState extends PersonsFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedRefreshingState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedRefreshingState({
     required super.object,
     required super.id,
@@ -68,7 +68,7 @@ class PersonsFetchAndRefreshPaginatedRefreshingState extends PersonsFetchAndRefr
 }
 
 class PersonsFetchAndRefreshPaginatedRefreshingSuccessState extends PersonsFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingSuccessState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedRefreshingSuccessState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedRefreshingSuccessState({
     required super.object,
     required super.id,
@@ -76,7 +76,7 @@ class PersonsFetchAndRefreshPaginatedRefreshingSuccessState extends PersonsFetch
 }
 
 class PersonsFetchAndRefreshPaginatedRefreshingErrorState extends PersonsFetchAndRefreshPaginatedWithValueState
-    implements FetchAndRefreshRefreshingErrorState<String, PaginationPersonEntity> {
+    implements FetchAndRefreshPaginatedRefreshingErrorState<String, PaginationPersonEntity> {
   const PersonsFetchAndRefreshPaginatedRefreshingErrorState({
     required super.object,
     required super.id,

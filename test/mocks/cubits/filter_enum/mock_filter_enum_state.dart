@@ -1,21 +1,21 @@
 part of 'mock_filter_enum_cubit.dart';
 
 @immutable
-sealed class MockFilterEnumState extends FilterEnumAbstractState<MockEnum, MockFilterEnumEntity> {
+sealed class MockFilterEnumState extends FilterEnumState<MockEnum, MockFilterEnumEntity> {
   const MockFilterEnumState({required super.filters});
 }
 
 class MockFilterInitialState extends MockFilterEnumState
-    implements FilterEnumAbstractInitialState<MockEnum, MockFilterEnumEntity> {
+    implements FilterEnumInitialState<MockEnum, MockFilterEnumEntity> {
   const MockFilterInitialState(List<MockFilterEnumEntity> status) : super(filters: status);
 }
 
 class MockFilterFilteredState extends MockFilterEnumState
-    implements FilterEnumAbstractFilteredState<MockEnum, MockFilterEnumEntity> {
+    implements FilterEnumFilteredState<MockEnum, MockFilterEnumEntity> {
   const MockFilterFilteredState(List<MockFilterEnumEntity> status) : super(filters: status);
 }
 
 class MockFilterDefaultFilterState extends MockFilterEnumState
-    implements FilterEnumAbstractDefaultFilterState<MockEnum, MockFilterEnumEntity> {
+    implements FilterEnumDefaultFilterState<MockEnum, MockFilterEnumEntity> {
   const MockFilterDefaultFilterState(List<MockFilterEnumEntity> status) : super(filters: status);
 }
