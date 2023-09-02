@@ -3,7 +3,7 @@ import 'package:example/domain/pagination_person_entity.dart';
 import 'package:example/domain/person_entity.dart';
 import 'package:example/domain/sort_enum.dart';
 import 'package:flutter_bloc_toolbox/entities/filter_enum_entity.dart';
-import 'package:flutter_bloc_toolbox/entities/sort_entity.dart';
+import 'package:flutter_bloc_toolbox/entities/sort_enum_entity.dart';
 
 class PersonRepository {
   Future<PersonEntity?> getPersonById(String id) async {
@@ -14,7 +14,7 @@ class PersonRepository {
   Future<PaginationPersonEntity?> getPaginationPersonById(
     String id, {
     required bool checked,
-    required SortEntity<SortEnum> sortEntity,
+    required SortEnumEntity<SortEnum> sortEntity,
     required Iterable<FilterEnumEntity<FilterEnum>> filtersEnum,
     PaginationPersonEntity? currentPagination,
   }) async {

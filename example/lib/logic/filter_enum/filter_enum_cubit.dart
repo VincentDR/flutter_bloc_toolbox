@@ -1,14 +1,14 @@
 import 'package:example/domain/filter_enum.dart';
 import 'package:flutter_bloc_toolbox/entities/filter_enum_entity.dart';
-import 'package:flutter_bloc_toolbox/logic/filter_enum/filter_enum_abstract_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/filter_enum/filter_enum_cubit.dart';
 import 'package:meta/meta.dart';
 
 part 'filter_enum_state.dart';
 
-class FilterEnumCubit extends FilterEnumAbstractCubit<FilterEnum, FilterEnumEntity<FilterEnum>, FilterEnumState> {
-  FilterEnumCubit(bool Function(FilterEnum) selectedByDefault)
+class FilterEnumCubitExample extends FilterEnumCubit<FilterEnum, FilterEnumEntity<FilterEnum>, FilterEnumStateExample> {
+  FilterEnumCubitExample(bool Function(FilterEnum) selectedByDefault)
       : super(
-          FilterInitialState(
+          FilterInitialStateExample(
             FilterEnum.values.fold(
               [],
               (previousValue, e) {
@@ -24,15 +24,15 @@ class FilterEnumCubit extends FilterEnumAbstractCubit<FilterEnum, FilterEnumEnti
 
   @override
   @protected
-  FilterFilteredState filteredState(
+  FilterFilteredStateExample createFilteredState(
     List<FilterEnumEntity<FilterEnum>> filters,
   ) =>
-      FilterFilteredState(filters);
+      FilterFilteredStateExample(filters);
 
   @override
   @protected
-  FilterDefaultFilterState defaultState(
+  FilterDefaultFilterStateExample createDefaultState(
     List<FilterEnumEntity<FilterEnum>> filters,
   ) =>
-      FilterDefaultFilterState(filters);
+      FilterDefaultFilterStateExample(filters);
 }

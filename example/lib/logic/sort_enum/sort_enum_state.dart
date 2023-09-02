@@ -1,13 +1,13 @@
 part of 'sort_enum_cubit.dart';
 
-sealed class SortEnumState extends SortEnumAbstractState<SortEnum> {
-  const SortEnumState({required super.sortEntity});
+sealed class SortEnumStateExample extends SortEnumState<SortEnum> {
+  const SortEnumStateExample({required super.sortEntity});
 }
 
-class SortEnumInitialState extends SortEnumState implements SortEnumAbstractInitialState<SortEnum> {
-  const SortEnumInitialState({required SortEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
+class SortEnumInitialStateExample extends SortEnumStateExample implements SortEnumInitialState<SortEnum> {
+  const SortEnumInitialStateExample({required SortEnumEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
 }
 
-class SortEnumChangedState extends SortEnumState implements SortEnumAbstractChangedState<SortEnum> {
-  const SortEnumChangedState({required SortEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
+class SortEnumChangedStateExample extends SortEnumStateExample implements SortEnumChangedState<SortEnum> {
+  const SortEnumChangedStateExample({required SortEnumEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
 }

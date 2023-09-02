@@ -1,7 +1,10 @@
 import 'package:example/data/person_repository.dart';
 import 'package:example/logic/fetch_and_refresh_paginated/persons_fetch_and_refresh_paginated_cubit.dart';
+import 'package:example/logic/filter_enum/filter_enum_cubit.dart';
+import 'package:example/logic/sort_enum/sort_enum_cubit.dart';
 import 'package:example/presentation/persons_fetch_and_refresh_state_valid_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_toolbox/logic/bool/bool_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +35,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final String idToFetch = 'idToFetch';
-  final PersonsFetchAndRefreshPaginatedCubit paginatedCubit = PersonsFetchAndRefreshPaginatedCubit(PersonRepository());
+  final PersonsFetchAndRefreshPaginatedCubit paginatedCubit = PersonsFetchAndRefreshPaginatedCubit(
+    PersonRepository(),
+    BoolCubit(),
+    FilterEnumCubitExample((p0) => false),
+    SortEnumCubitExample(),
+  );
 
   @override
   void initState() {
