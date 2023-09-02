@@ -1,9 +1,9 @@
-/// Represent a sort_enum based on a enum
-class SortEntity<T extends Enum> {
+/// Represent a sort based on a enum
+class SortEnumEntity<T extends Enum> {
   final bool ascendant;
   final T value;
 
-  const SortEntity({
+  const SortEnumEntity({
     required this.ascendant,
     required this.value,
   });

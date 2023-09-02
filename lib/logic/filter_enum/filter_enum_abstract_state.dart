@@ -13,8 +13,10 @@ abstract class FilterEnumAbstractState<TEnum extends Enum, TFilterEnumEntity ext
 
 class FilterEnumAbstractInitialState<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEntity<TEnum>>
     extends FilterEnumAbstractState<TEnum, TFilterEnumEntity> {
-  FilterEnumAbstractInitialState(List<TEnum> values, TFilterEnumEntity Function(TEnum, bool, int) builder)
-      : super(
+  FilterEnumAbstractInitialState(
+    List<TEnum> values,
+    TFilterEnumEntity Function(TEnum, bool, int) builder,
+  ) : super(
           filters: values.fold(
             [],
             (previousValue, e) {

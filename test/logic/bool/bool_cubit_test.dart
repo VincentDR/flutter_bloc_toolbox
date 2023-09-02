@@ -36,5 +36,18 @@ void main() {
         isA<BoolState>().having((a) => a.value, 'Change state', false),
       ],
     );
+
+    blocTest<BoolCubit, BoolState>(
+      'Bool initial, change value and toggle it',
+      build: () => BoolCubit(initialValue: true),
+      act: (cubit) {
+        cubit.changeValue(false);
+        cubit.toggleValue();
+      },
+      expect: () => [
+        isA<BoolState>().having((a) => a.value, 'Change state', false),
+        isA<BoolState>().having((a) => a.value, 'Change state', true),
+      ],
+    );
   });
 }
