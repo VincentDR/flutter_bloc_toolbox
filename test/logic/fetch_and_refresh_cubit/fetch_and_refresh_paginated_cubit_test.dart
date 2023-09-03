@@ -61,7 +61,7 @@ void main() {
   group('FetchAndRefreshPaginatedCubit', () {
     test('FetchAndRefreshPaginatedCubit initial state', () {
       FetchAndRefreshPaginatedCubit fetchAndRefreshPaginatedCubit = FetchAndRefreshPaginatedCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       );
 
       expect(
@@ -90,7 +90,7 @@ void main() {
         ).thenAnswer((_) async => paginationEntityMore);
       },
       build: () => FetchAndRefreshPaginatedCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       ),
       act: (cubit) async {
         await cubit.fetch(idToFetch: idToGet);
@@ -141,7 +141,7 @@ void main() {
         ),
       ).thenAnswer((_) async => null),
       build: () => FetchAndRefreshPaginatedCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       ),
       act: (cubit) async {
         await cubit.fetch(idToFetch: idToGet);

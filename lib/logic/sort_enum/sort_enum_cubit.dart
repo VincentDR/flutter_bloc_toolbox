@@ -24,7 +24,9 @@ class SortEnumCubit<TEnum extends Enum, TState extends SortEnumState<TEnum>> ext
 
   @mustBeOverridden
   @protected
-  SortEnumChangedState<TEnum> createChangedState(SortEnumEntity<TEnum> sortEntity) =>
+  SortEnumChangedState<TEnum> createChangedState(
+    SortEnumEntity<TEnum> sortEntity,
+  ) =>
       SortEnumChangedState(sortEntity: sortEntity);
 
   /// Prevents same sort to be used from initial to changed

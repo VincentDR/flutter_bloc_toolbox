@@ -9,7 +9,7 @@ abstract class SortEnumState<T extends Enum> extends Equatable {
   @override
   List<Object> get props => [
         sortEntity.ascendant,
-        sortEntity.value,
+        sortEntity.sortEnum,
       ];
 }
 
