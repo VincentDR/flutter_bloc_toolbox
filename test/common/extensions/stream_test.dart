@@ -1,11 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter_bloc_toolbox/common/extensions/stream.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rxdart/rxdart.dart';
 
 void main() {
   group('Test Stream extension', () {
-    BehaviorSubject<int> testingStream = BehaviorSubject<int>();
     int validState = 4;
+    int wrongState = 2;
     bool tester(int valueToTest) {
       if (valueToTest % 2 == 0) {
         return true;
@@ -13,29 +14,32 @@ void main() {
       return false;
     }
 
-    tearDownAll(() {
+    test('Right state', () {
+      StreamController<int> testingStream = StreamController<int>.broadcast();
+      testingStream.stream.firstNextElementWith(tester).then((value) {
+        expect(value, validState);
+      });
+
+      testingStream.add(1);
+      testingStream.add(3);
+      testingStream.add(validState);
+
       testingStream.close();
     });
 
-    test('Right state', () {
-      testingStream.firstNextElementWith(tester).then((value) {
-        expect(value, validState);
-      });
-
-      testingStream.add(1);
-      testingStream.add(3);
-      testingStream.add(4);
-    });
-
     test('Wrong state', () {
-      testingStream.firstNextElementWith(tester).then((value) {
-        expect(value, validState);
+      StreamController<int> testingStream = StreamController<int>.broadcast();
+
+      testingStream.stream.firstNextElementWith(tester).then((value) {
+        expect(value, wrongState);
       });
 
       testingStream.add(1);
-      testingStream.add(2);
+      testingStream.add(wrongState);
       testingStream.add(3);
-      testingStream.add(4);
+      testingStream.add(validState);
+
+      testingStream.close();
     });
   });
 }
