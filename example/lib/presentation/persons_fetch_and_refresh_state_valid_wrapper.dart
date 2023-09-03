@@ -8,9 +8,6 @@ class PersonsFetchAndRefreshStateValidWrapper extends FetchAndRefreshStateValidW
     PersonsFetchAndRefreshPaginatedWithValueState,
     String,
     PaginationPersonEntity> {
-  @override
-  String get errorMessage => 'Oups';
-
   const PersonsFetchAndRefreshStateValidWrapper({
     super.key,
     super.idToCheck,
