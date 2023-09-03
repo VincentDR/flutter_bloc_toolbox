@@ -65,7 +65,21 @@ void main() {
       );
 
       expect(
-        fetchAndRefreshPaginatedCubit.state is FetchAndRefreshInitialState,
+        fetchAndRefreshPaginatedCubit.state is FetchAndRefreshPaginatedInitialState,
+        true,
+      );
+
+      fetchAndRefreshPaginatedCubit.directSet(idToGet, paginationEntity);
+
+      expect(
+        fetchAndRefreshPaginatedCubit.state is FetchAndRefreshPaginatedFetchingSuccessState,
+        true,
+      );
+
+      fetchAndRefreshPaginatedCubit.reset();
+
+      expect(
+        fetchAndRefreshPaginatedCubit.state is FetchAndRefreshPaginatedInitialState,
         true,
       );
     });

@@ -18,10 +18,24 @@ void main() {
   getObjectTest({required String idToGet}) => personRepository.getObject(idToGet);
 
   group('FetchAndRefreshCubit', () {
-    test('FetchAndRefreshCubit initial state', () {
+    test('FetchAndRefreshCubit initial state and reset', () {
       FetchAndRefreshCubit fetchAndRefreshCubit = FetchAndRefreshCubitTest(
         fetchObject: getObjectTest,
       );
+
+      expect(
+        fetchAndRefreshCubit.state is FetchAndRefreshInitialState,
+        true,
+      );
+
+      fetchAndRefreshCubit.directSet(idToGet, personEntity);
+
+      expect(
+        fetchAndRefreshCubit.state is FetchAndRefreshFetchingSuccessState,
+        true,
+      );
+
+      fetchAndRefreshCubit.reset();
 
       expect(
         fetchAndRefreshCubit.state is FetchAndRefreshInitialState,
@@ -57,6 +71,35 @@ void main() {
           true,
         ),
         isA<FetchAndRefreshRefreshingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == personEntity,
+          'Change state',
+          true,
+        ),
+      ],
+    );
+
+    blocTest<FetchAndRefreshCubitTest, FetchAndRefreshStateTest>(
+      'FetchAndRefreshCubit direct set and refresh error',
+      setUp: () => when(() => personRepository.getObject(idToGet)).thenAnswer((_) async => null),
+      build: () => FetchAndRefreshCubitTest(
+        fetchObject: getObjectTest,
+      ),
+      act: (cubit) async {
+        await cubit.directSet(idToGet, personEntity);
+        await cubit.refresh();
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == personEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingState>().having(
+          (a) => a.id == idToGet && a.object == personEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingErrorState>().having(
           (a) => a.id == idToGet && a.object == personEntity,
           'Change state',
           true,
