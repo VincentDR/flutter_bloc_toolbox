@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: dart pub get
       - name: Format
-        run: dart fix --apply && dart format ./lib -l 80
+        run: dart format ./lib -l 80 && dart fix --apply
       - name: Publish
         run: dart pub publish --force
