@@ -1,3 +1,7 @@
+## 0.1.2
+
+Clean dependencies
+
 ## 0.1.1
 
 100% coverage

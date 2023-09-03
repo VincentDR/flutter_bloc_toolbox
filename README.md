@@ -43,18 +43,19 @@ fetchAndRefreshCubit.refresh();
 fetchAndRefreshCubit.reset();
 
 ...
+
 FetchAndRefreshStateValidWrapper<
     FetchAndRefreshCubitTest,
     FetchAndRefreshStateTest,
     FetchAndRefreshWithValueState<String, PersonEntity>,
     String,
     PersonEntity>(
-    cubit: fetchAndRefreshCubit,
-    idToCheck: 'ID',
-    validRender: (BuildContext context, FetchAndRefreshWithValueState<String, PersonEntity> localState) {
-        return ...;
-    },
-);
+        cubit: fetchAndRefreshCubit,
+        idToCheck: 'ID',
+        validRender: (BuildContext context, FetchAndRefreshWithValueState<String, PersonEntity> localState) {
+            return ...;
+        },
+    );
 ```
 
 ### FetchAndRefreshPaginated
