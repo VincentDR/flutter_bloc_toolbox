@@ -17,7 +17,7 @@ abstract class FetchAndRefreshWithValueState<TIdType, TType> extends FetchAndRef
   const FetchAndRefreshWithValueState({
     required super.id,
     required this.object,
-  }) : super();
+  });
 }
 
 interface class FetchAndRefreshLoadingState {}
@@ -30,7 +30,7 @@ class FetchAndRefreshInitialState<TIdType, TType> extends FetchAndRefreshState<T
 
 class FetchAndRefreshFetchingState<TIdType, TType> extends FetchAndRefreshWithIdState<TIdType, TType>
     implements FetchAndRefreshLoadingState {
-  const FetchAndRefreshFetchingState({required super.id}) : super();
+  const FetchAndRefreshFetchingState({required super.id});
 }
 
 class FetchAndRefreshFetchingSuccessState<TIdType, TType> extends FetchAndRefreshWithValueState<TIdType, TType>
@@ -38,12 +38,12 @@ class FetchAndRefreshFetchingSuccessState<TIdType, TType> extends FetchAndRefres
   const FetchAndRefreshFetchingSuccessState({
     required super.id,
     required super.object,
-  }) : super();
+  });
 }
 
 class FetchAndRefreshFetchingErrorState<TIdType, TType> extends FetchAndRefreshWithIdState<TIdType, TType>
     implements FetchAndRefreshErrorState {
-  const FetchAndRefreshFetchingErrorState({required super.id}) : super();
+  const FetchAndRefreshFetchingErrorState({required super.id});
 }
 
 class FetchAndRefreshRefreshingState<TIdType, TType> extends FetchAndRefreshWithValueState<TIdType, TType>
@@ -51,7 +51,7 @@ class FetchAndRefreshRefreshingState<TIdType, TType> extends FetchAndRefreshWith
   const FetchAndRefreshRefreshingState({
     required super.id,
     required super.object,
-  }) : super();
+  });
 }
 
 class FetchAndRefreshRefreshingSuccessState<TIdType, TType> extends FetchAndRefreshWithValueState<TIdType, TType>
@@ -59,7 +59,7 @@ class FetchAndRefreshRefreshingSuccessState<TIdType, TType> extends FetchAndRefr
   const FetchAndRefreshRefreshingSuccessState({
     required super.id,
     required super.object,
-  }) : super();
+  });
 }
 
 class FetchAndRefreshRefreshingErrorState<TIdType, TType> extends FetchAndRefreshWithValueState<TIdType, TType>
@@ -67,5 +67,5 @@ class FetchAndRefreshRefreshingErrorState<TIdType, TType> extends FetchAndRefres
   const FetchAndRefreshRefreshingErrorState({
     required super.id,
     required super.object,
-  }) : super();
+  });
 }
