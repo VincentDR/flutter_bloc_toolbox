@@ -132,6 +132,43 @@ void main() {
     );
 
     blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+      'FetchAndRefreshPaginatedCubit direct set and refresh error',
+      setUp: () {
+        when(
+          () => personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: true,
+            currentPaginationEntity: null,
+          ),
+        ).thenAnswer((_) async => null);
+      },
+      build: () => FetchAndRefreshPaginatedCubitTest(
+        fetchObject: getObjectTest,
+      ),
+      act: (cubit) async {
+        await cubit.directSet(idToGet, paginationEntity);
+        await cubit.refresh();
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+        isA<FetchAndRefreshRefreshingErrorState>().having(
+          (a) => a.id == idToGet && a.object == paginationEntity,
+          'Change state',
+          true,
+        ),
+      ],
+    );
+
+    blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
       'FetchAndRefreshPaginatedCubit fetch error',
       setUp: () => when(
         () => personRepository.getPaginationObject(
@@ -160,6 +197,106 @@ void main() {
       ],
     );
   });
+
+  blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+    'FetchAndRefreshPaginatedCubit fetch more error',
+    setUp: () {
+      when(
+        () => personRepository.getPaginationObject(
+          idToGet,
+          onlyOnePage: true,
+          currentPaginationEntity: null,
+        ),
+      ).thenAnswer((_) async => paginationEntity);
+
+      when(
+        () => personRepository.getPaginationObject(
+          idToGet,
+          onlyOnePage: true,
+          currentPaginationEntity: paginationEntity,
+        ),
+      ).thenAnswer((_) async => null);
+    },
+    build: () => FetchAndRefreshPaginatedCubitTest(
+      fetchObject: getObjectTest,
+    ),
+    act: (cubit) async {
+      await cubit.fetch(idToFetch: idToGet);
+      await cubit.fetch(idToFetch: idToGet, loadMore: true);
+    },
+    expect: () => [
+      isA<FetchAndRefreshFetchingState>().having(
+        (a) => a.id,
+        'Change state',
+        idToGet,
+      ),
+      isA<FetchAndRefreshFetchingSuccessState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntity,
+        'Change state',
+        true,
+      ),
+      isA<FetchAndRefreshPaginatedMoreState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntity,
+        'Change state',
+        true,
+      ),
+      isA<FetchAndRefreshPaginatedMoreErrorState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntity,
+        'Change state',
+        true,
+      ),
+    ],
+  );
+
+  blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+    'FetchAndRefreshPaginatedCubit fetch more success',
+    setUp: () {
+      when(
+        () => personRepository.getPaginationObject(
+          idToGet,
+          onlyOnePage: true,
+          currentPaginationEntity: null,
+        ),
+      ).thenAnswer((_) async => paginationEntity);
+
+      when(
+        () => personRepository.getPaginationObject(
+          idToGet,
+          onlyOnePage: true,
+          currentPaginationEntity: paginationEntity,
+        ),
+      ).thenAnswer((_) async => paginationEntityMore);
+    },
+    build: () => FetchAndRefreshPaginatedCubitTest(
+      fetchObject: getObjectTest,
+    ),
+    act: (cubit) async {
+      await cubit.fetch(idToFetch: idToGet);
+      await cubit.fetch(idToFetch: idToGet, loadMore: true);
+    },
+    expect: () => [
+      isA<FetchAndRefreshFetchingState>().having(
+        (a) => a.id,
+        'Change state',
+        idToGet,
+      ),
+      isA<FetchAndRefreshFetchingSuccessState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntity,
+        'Change state',
+        true,
+      ),
+      isA<FetchAndRefreshPaginatedMoreState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntity,
+        'Change state',
+        true,
+      ),
+      isA<FetchAndRefreshPaginatedMoreSuccessState>().having(
+        (a) => a.id == idToGet && a.object == paginationEntityMore,
+        'Change state',
+        true,
+      ),
+    ],
+  );
 
   group('FetchAndRefreshPaginatedCubit extended', () {
     test('FetchAndRefreshPaginatedCubit extended initial state', () {
