@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bloc_toolbox/entities/pagination_entity.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_paginated_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_paginated_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

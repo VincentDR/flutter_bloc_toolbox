@@ -13,7 +13,7 @@ export 'entities/sort_enum_entity.dart' show SortEnumEntity;
 
 //#region Logic
 export 'logic/bool/bool_cubit.dart' show BoolCubit, BoolState, BoolInitialState, BoolChangedState;
-export 'logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart'
+export 'logic/fetch_and_refresh/fetch_and_refresh_cubit.dart'
     show
         FetchAndRefreshCubit,
         FetchAndRefreshState,
@@ -29,7 +29,7 @@ export 'logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart'
         FetchAndRefreshRefreshingSuccessState,
         FetchAndRefreshWithIdState,
         FetchAndRefreshWithValueState;
-export 'logic/fetch_and_refresh_cubit/fetch_and_refresh_paginated_cubit.dart'
+export 'logic/fetch_and_refresh/fetch_and_refresh_paginated_cubit.dart'
     show
         FetchAndRefreshPaginatedCubit,
         FetchAndRefreshPaginatedState,

@@ -1,3 +1,7 @@
+## 0.0.7
+
+Update Readme
+
 ## 0.0.6
 
 Cleaner code
