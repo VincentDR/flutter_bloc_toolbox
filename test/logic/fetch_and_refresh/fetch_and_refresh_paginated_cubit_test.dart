@@ -85,6 +85,48 @@ void main() {
     });
 
     blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
+      'FetchAndRefreshPaginatedCubit fetch error and the refresh',
+      setUp: () {
+        when(
+          () => personRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: true,
+            currentPaginationEntity: null,
+          ),
+        ).thenAnswer((_) async => null);
+      },
+      build: () => FetchAndRefreshPaginatedCubitTest(
+        fetchObject: getObjectTest,
+      ),
+      act: (cubit) async {
+        await cubit.fetch(idToFetch: idToGet);
+        await cubit.refresh();
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+        isA<FetchAndRefreshFetchingErrorState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+        isA<FetchAndRefreshFetchingState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+        isA<FetchAndRefreshFetchingErrorState>().having(
+          (a) => a.id,
+          'Change state',
+          idToGet,
+        ),
+      ],
+    );
+
+    blocTest<FetchAndRefreshPaginatedCubitTest, FetchAndRefreshPaginatedStateTest>(
       'FetchAndRefreshPaginatedCubit fetch and refresh success',
       setUp: () {
         when(
