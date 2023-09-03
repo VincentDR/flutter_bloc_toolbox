@@ -8,17 +8,14 @@ part 'fetch_and_refresh_state.dart';
 /// Cubit used to fetch and/or refresh data
 class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, TIdType, TType> extends Cubit<TState>
     with CubitPreventsEmitOnClosed<TState> {
-  /// Must return a object of TType to show success, null if error
-  @protected
-  final Function fetchObject;
-  @protected
-  Future<TType?> getObject({required TIdType idToGet}) async => fetchObject(idToGet: idToGet);
+  final Function? fetchObject;
 
   FetchAndRefreshCubit({
     TState? initialState,
-    required Future<TType?> Function({required TIdType idToGet}) getObject,
-  })  : fetchObject = getObject,
-        super(initialState ?? FetchAndRefreshInitialState<TIdType, TType>() as TState);
+    Future<TType?> Function({required TIdType idToGet})? this.fetchObject,
+  }) : super(
+          initialState ?? FetchAndRefreshInitialState<TIdType, TType>() as TState,
+        );
 
   //#region States creation
   @mustBeOverridden
@@ -27,35 +24,67 @@ class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, 
 
   @mustBeOverridden
   @protected
-  FetchAndRefreshFetchingState<TIdType, TType> createFetchingState(TIdType id) =>
+  FetchAndRefreshFetchingState<TIdType, TType> createFetchingState(
+    TIdType id,
+  ) =>
       FetchAndRefreshFetchingState<TIdType, TType>(id: id);
 
   @mustBeOverridden
   @protected
-  FetchAndRefreshFetchingErrorState<TIdType, TType> createFetchedErrorState(TIdType id) =>
+  FetchAndRefreshFetchingErrorState<TIdType, TType> createFetchedErrorState(
+    TIdType id,
+  ) =>
       FetchAndRefreshFetchingErrorState<TIdType, TType>(id: id);
 
   @mustBeOverridden
   @protected
-  FetchAndRefreshFetchingSuccessState<TIdType, TType> createFetchedSuccessState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshFetchingSuccessState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshFetchingSuccessState<TIdType, TType> createFetchedSuccessState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshFetchingSuccessState<TIdType, TType>(
+        id: id,
+        object: objectToSet,
+      );
 
   @mustBeOverridden
   @protected
-  FetchAndRefreshRefreshingState<TIdType, TType> createRefreshingState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshRefreshingState<TIdType, TType> createRefreshingState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshRefreshingState<TIdType, TType>(
+        id: id,
+        object: objectToSet,
+      );
 
   @mustBeOverridden
   @protected
   FetchAndRefreshRefreshingSuccessState<TIdType, TType> createRefreshedSuccessState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingSuccessState<TIdType, TType>(id: id, object: objectToSet);
+      FetchAndRefreshRefreshingSuccessState<TIdType, TType>(
+        id: id,
+        object: objectToSet,
+      );
 
   @mustBeOverridden
   @protected
-  FetchAndRefreshRefreshingErrorState<TIdType, TType> createRefreshedErrorState(TIdType id, TType objectToSet) =>
-      FetchAndRefreshRefreshingErrorState<TIdType, TType>(id: id, object: objectToSet);
+  FetchAndRefreshRefreshingErrorState<TIdType, TType> createRefreshedErrorState(
+    TIdType id,
+    TType objectToSet,
+  ) =>
+      FetchAndRefreshRefreshingErrorState<TIdType, TType>(
+        id: id,
+        object: objectToSet,
+      );
 
   //#endregion States creation
+
+  /// Must return a object of TType to show success, null if error
+  @mustBeOverridden
+  @protected
+  Future<TType?> getObject({required TIdType idToGet}) async {
+    return fetchObject?.call(idToGet: idToGet);
+  }
 
   /// Check if a refresh was successful
   /// Especially useful with smart-refresher, remove a lot of boiler-plate code

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_cubit.dart';
 import 'package:meta/meta.dart';
 
 import '../../fixtures/person_entity_fixture.dart';
@@ -13,7 +13,6 @@ class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshS
   MockFetchAndRefreshCubit(this.personRepository)
       : super(
           initialState: const MockFetchAndRefreshInitialState(),
-          getObject: ({required String idToGet}) => personRepository.getObject(idToGet),
         );
 
   //#region States creation
@@ -44,4 +43,7 @@ class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshS
       MockFetchAndRefreshRefreshingErrorState(id: id, object: objectToSet);
 
   //#endregion States creation
+
+  @override
+  Future<PersonEntity?> getObject({required String idToGet}) => personRepository.getObject(idToGet);
 }

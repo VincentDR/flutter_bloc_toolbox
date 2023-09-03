@@ -23,12 +23,16 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
 
   @mustBeOverridden
   @protected
-  FilterEnumFilteredState<TEnum, TFilterEnumEntity> createFilteredState(List<TFilterEnumEntity> filters) =>
+  FilterEnumFilteredState<TEnum, TFilterEnumEntity> createFilteredState(
+    List<TFilterEnumEntity> filters,
+  ) =>
       FilterEnumFilteredState<TEnum, TFilterEnumEntity>(filters);
 
   @mustBeOverridden
   @protected
-  FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity> createDefaultState(List<TFilterEnumEntity> filters) =>
+  FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity> createDefaultState(
+    List<TFilterEnumEntity> filters,
+  ) =>
       FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity>(filters);
 
   /// Change the picked value of a single TFilterEnumEntity, corresponding to the TEnum

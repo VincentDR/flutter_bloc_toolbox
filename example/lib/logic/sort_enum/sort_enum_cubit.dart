@@ -8,19 +8,19 @@ class SortEnumCubitExample extends SortEnumCubit<SortEnum, SortEnumStateExample>
   static const List<SortEnumEntity<SortEnum>> sortsToUse = [
     SortEnumEntity<SortEnum>(
       ascendant: true,
-      value: SortEnum.fistName,
+      sortEnum: SortEnum.fistName,
     ),
     SortEnumEntity<SortEnum>(
       ascendant: false,
-      value: SortEnum.fistName,
+      sortEnum: SortEnum.fistName,
     ),
     SortEnumEntity<SortEnum>(
       ascendant: true,
-      value: SortEnum.lastName,
+      sortEnum: SortEnum.lastName,
     ),
     SortEnumEntity<SortEnum>(
       ascendant: false,
-      value: SortEnum.lastName,
+      sortEnum: SortEnum.lastName,
     ),
   ];
 

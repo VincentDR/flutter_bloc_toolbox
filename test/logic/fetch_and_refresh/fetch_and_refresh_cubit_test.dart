@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -20,7 +20,7 @@ void main() {
   group('FetchAndRefreshCubit', () {
     test('FetchAndRefreshCubit initial state', () {
       FetchAndRefreshCubit fetchAndRefreshCubit = FetchAndRefreshCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       );
 
       expect(
@@ -33,7 +33,7 @@ void main() {
       'FetchAndRefreshCubit fetch and refresh success',
       setUp: () => when(() => personRepository.getObject(idToGet)).thenAnswer((_) async => personEntity),
       build: () => FetchAndRefreshCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       ),
       act: (cubit) async {
         await cubit.fetch(idToFetch: idToGet);
@@ -68,7 +68,7 @@ void main() {
       'FetchAndRefreshCubit fetch error',
       setUp: () => when(() => personRepository.getObject(idToGet)).thenAnswer((_) async => null),
       build: () => FetchAndRefreshCubitTest(
-        getObject: getObjectTest,
+        fetchObject: getObjectTest,
       ),
       act: (cubit) async {
         await cubit.fetch(idToFetch: idToGet);

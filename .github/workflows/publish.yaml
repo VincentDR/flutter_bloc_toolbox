@@ -10,15 +10,15 @@ jobs:
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: self-hosted
-    with:
-      # Specify the github actions deployment environment
-      environment: pub.dev
+#    with:
+#      # Specify the github actions deployment environment
+#      environment: pub.dev
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
       - name: Install dependencies
         run: dart pub get
       - name: Format
-        run: dart fix --apply && dart format ./lib -l 80
+        run: dart format ./lib -l 80 && dart fix --apply
       - name: Publish
         run: dart pub publish --force

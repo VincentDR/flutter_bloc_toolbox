@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_cubit.dart';
 
 /// Assert that the state is valid to render the widget
 /// Else will display a button to request a new try
-abstract class FetchAndRefreshStateValidWrapper<
+class FetchAndRefreshStateValidWrapper<
     TCubit extends FetchAndRefreshCubit<TState, TIdType, TType>,
     TState extends FetchAndRefreshState<TIdType, TType>,
     TValidState extends FetchAndRefreshWithValueState<TIdType, TType>,
@@ -33,8 +32,8 @@ abstract class FetchAndRefreshStateValidWrapper<
   /// Custom retry text if needed
   final String Function(BuildContext)? retryText;
 
-  @mustBeOverridden
-  String get errorMessage;
+  /// Custom error text if needed
+  final String Function(BuildContext)? errorText;
 
   const FetchAndRefreshStateValidWrapper({
     super.key,
@@ -45,6 +44,7 @@ abstract class FetchAndRefreshStateValidWrapper<
     this.errorRender,
     this.sliver = false,
     this.retryText,
+    this.errorText,
   });
 
   @override
@@ -70,7 +70,7 @@ abstract class FetchAndRefreshStateValidWrapper<
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(errorMessage),
+                        Text(errorText?.call(context) ?? 'An error occurred'),
                         const SizedBox(height: 20),
                         if (idToCheck != null)
                           ElevatedButton(

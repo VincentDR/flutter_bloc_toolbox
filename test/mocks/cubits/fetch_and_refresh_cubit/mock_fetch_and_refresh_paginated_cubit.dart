@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_toolbox/entities/pagination_entity.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_cubit.dart';
-import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh_cubit/fetch_and_refresh_paginated_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_cubit.dart';
+import 'package:flutter_bloc_toolbox/logic/fetch_and_refresh/fetch_and_refresh_paginated_cubit.dart';
 import 'package:meta/meta.dart';
 
 import '../../fixtures/person_entity_fixture.dart';
@@ -16,29 +16,6 @@ class MockFetchAndRefreshPaginatedCubit
   MockFetchAndRefreshPaginatedCubit(this.mockRepository)
       : super(
           initialState: const MockFetchAndRefreshPaginatedInitialState(),
-          getObject: ({
-            required String idToGet,
-            bool loadMore = false,
-            bool getAll = false,
-            MockFetchAndRefreshPaginatedState? currentState,
-          }) async {
-            PaginationEntity<PersonEntity>? personsPaginationEntity;
-            if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
-              personsPaginationEntity = currentState.persons;
-            }
-            PaginationEntity<PersonEntity>? persons = personsPaginationEntity != null
-                ? await mockRepository.getPaginationObject(
-                    idToGet,
-                    onlyOnePage: !getAll,
-                    currentPaginationEntity: personsPaginationEntity,
-                  )
-                : await mockRepository.getPaginationObject(
-                    idToGet,
-                    onlyOnePage: !getAll,
-                  );
-
-            return persons;
-          },
         );
 
   //#region States creation
@@ -103,4 +80,29 @@ class MockFetchAndRefreshPaginatedCubit
   ) =>
       MockFetchAndRefreshPaginatedFetchingMoreErrorState(id: id, object: objectToSet);
 //#endregion States creation
+
+  @override
+  Future<PaginationEntity<PersonEntity>?> getObject({
+    required String idToGet,
+    bool loadMore = false,
+    bool getAll = false,
+    MockFetchAndRefreshPaginatedState? currentState,
+  }) async {
+    PaginationEntity<PersonEntity>? personsPaginationEntity;
+    if (loadMore && currentState is MockFetchAndRefreshPaginatedWithValueState) {
+      personsPaginationEntity = currentState.persons;
+    }
+    PaginationEntity<PersonEntity>? persons = personsPaginationEntity != null
+        ? await mockRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: !getAll,
+            currentPaginationEntity: personsPaginationEntity,
+          )
+        : await mockRepository.getPaginationObject(
+            idToGet,
+            onlyOnePage: !getAll,
+          );
+
+    return persons;
+  }
 }

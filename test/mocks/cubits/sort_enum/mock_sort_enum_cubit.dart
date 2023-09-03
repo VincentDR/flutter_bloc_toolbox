@@ -9,27 +9,27 @@ class MockSortEnumCubit extends SortEnumCubit<MockEnum, MockSortEnumState> {
   static const List<SortEnumEntity<MockEnum>> sortsToUse = [
     SortEnumEntity<MockEnum>(
       ascendant: true,
-      value: MockEnum.mock1,
+      sortEnum: MockEnum.mock1,
     ),
     SortEnumEntity<MockEnum>(
       ascendant: false,
-      value: MockEnum.mock1,
+      sortEnum: MockEnum.mock1,
     ),
     SortEnumEntity<MockEnum>(
       ascendant: true,
-      value: MockEnum.mock2,
+      sortEnum: MockEnum.mock2,
     ),
     SortEnumEntity<MockEnum>(
       ascendant: false,
-      value: MockEnum.mock3,
+      sortEnum: MockEnum.mock3,
     ),
     SortEnumEntity<MockEnum>(
       ascendant: true,
-      value: MockEnum.mock4,
+      sortEnum: MockEnum.mock4,
     ),
     SortEnumEntity<MockEnum>(
       ascendant: false,
-      value: MockEnum.mock4,
+      sortEnum: MockEnum.mock4,
     ),
   ];
 

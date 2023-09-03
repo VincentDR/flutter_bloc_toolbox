@@ -15,27 +15,27 @@ void main() {
     List<SortEnumTest> availableSorts = const [
       SortEnumTest(
         ascendant: true,
-        value: MockEnum.mock1,
+        sortEnum: MockEnum.mock1,
       ),
       SortEnumTest(
         ascendant: false,
-        value: MockEnum.mock1,
+        sortEnum: MockEnum.mock1,
       ),
       SortEnumTest(
         ascendant: true,
-        value: MockEnum.mock2,
+        sortEnum: MockEnum.mock2,
       ),
       SortEnumTest(
         ascendant: false,
-        value: MockEnum.mock3,
+        sortEnum: MockEnum.mock3,
       ),
       SortEnumTest(
         ascendant: true,
-        value: MockEnum.mock4,
+        sortEnum: MockEnum.mock4,
       ),
       SortEnumTest(
         ascendant: false,
-        value: MockEnum.mock4,
+        sortEnum: MockEnum.mock4,
       ),
     ];
     int defaultIndex = 2;

@@ -5,9 +5,6 @@ import '../fixtures/person_entity_fixture.dart';
 
 class MockFetchAndRefreshStateValidWrapper extends FetchAndRefreshStateValidWrapper<MockFetchAndRefreshCubit,
     MockFetchAndRefreshState, MockFetchAndRefreshWithValueState, String, PersonEntity> {
-  @override
-  String get errorMessage => 'Oups';
-
   const MockFetchAndRefreshStateValidWrapper({
     super.key,
     super.idToCheck,
