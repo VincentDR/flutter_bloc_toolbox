@@ -87,11 +87,16 @@ void main() {
     );
 
     blocTest<MockSortEnumCubit, MockSortEnumState>(
-      'SortEnumCubit extended initial and change value',
+      'SortEnumCubit extended initial and change value then reset',
       build: () => MockSortEnumCubit(),
-      act: (cubit) => cubit.changeSort(MockSortEnumCubit.sortsToUse.first),
+      act: (cubit) {
+        cubit.changeSort(MockSortEnumCubit.sortsToUse.first);
+        cubit.resetSortToDefault();
+      },
       expect: () => [
         isA<SortEnumChangedState>().having((a) => a.sortEntity, 'Change state', MockSortEnumCubit.sortsToUse.first),
+        isA<SortEnumChangedState>()
+            .having((a) => a.sortEntity, 'Change state', MockSortEnumCubit.sortsToUse.elementAt(3)),
       ],
     );
   });
