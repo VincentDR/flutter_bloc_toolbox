@@ -157,7 +157,8 @@ class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPaginatedState
     bool getAll = false,
   }) async {
     FetchAndRefreshState<TIdType, TType> currentState = state;
-    if (currentState is FetchAndRefreshFetchingState<TIdType, TType> && currentState.id == idToFetch) {
+    if ((currentState is FetchAndRefreshFetchingState<TIdType, TType> && currentState.id == idToFetch) ||
+        (currentState is FetchAndRefreshPaginatedMoreState<TIdType, TType>) && currentState.id == idToFetch) {
       return;
     }
 

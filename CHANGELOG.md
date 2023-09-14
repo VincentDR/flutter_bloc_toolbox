@@ -1,3 +1,7 @@
+## 0.1.3
+
+Fix pagination where two calls with same settings might occur.
+
 ## 0.1.2
 
 Clean dependencies
