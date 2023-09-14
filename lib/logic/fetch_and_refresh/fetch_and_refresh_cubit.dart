@@ -8,6 +8,7 @@ part 'fetch_and_refresh_state.dart';
 /// Cubit used to fetch and/or refresh data
 class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, TIdType, TType> extends Cubit<TState>
     with CubitPreventsEmitOnClosed<TState> {
+  @protected
   final Function? fetchObject;
 
   FetchAndRefreshCubit({
