@@ -10,5 +10,6 @@ class MockFetchAndRefreshStateValidWrapper extends FetchAndRefreshStateValidWrap
     super.idToCheck,
     required super.validRender,
     super.sliver = false,
+    super.allowRetry = true,
   });
 }

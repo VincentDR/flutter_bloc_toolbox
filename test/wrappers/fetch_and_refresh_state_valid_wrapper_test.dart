@@ -159,6 +159,7 @@ void main() {
           child: BlocProvider<MockFetchAndRefreshCubit>.value(
             value: mockFetchAndRefreshCubit,
             child: MockFetchAndRefreshStateValidWrapper(
+              allowRetry: false,
               validRender: (BuildContext context, MockFetchAndRefreshWithValueState validState) {
                 return const ColoredBox(
                   color: Colors.green,
