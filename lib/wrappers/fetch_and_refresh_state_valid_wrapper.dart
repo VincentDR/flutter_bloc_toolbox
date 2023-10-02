@@ -84,7 +84,7 @@ class FetchAndRefreshStateValidWrapper<
                         const SizedBox(height: 20),
                         if (allowRetry)
                           ElevatedButton(
-                            onPressed: () => (context, localState),
+                            onPressed: () => retryFunction(context, localState),
                             child: Text(retryText?.call(context) ?? 'Retry'),
                           ),
                       ],
