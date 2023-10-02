@@ -29,11 +29,20 @@ class FetchAndRefreshStateValidWrapper<
   /// Set to true if used in a sliver context
   final bool sliver;
 
+  /// Should the retry button be visible
+  final bool allowRetry;
+
   /// Custom retry text if needed
   final String Function(BuildContext)? retryText;
 
   /// Custom error text if needed
   final String Function(BuildContext)? errorText;
+
+  void retryFunction(BuildContext context, TState localState) {
+    if (idToCheck != null) {
+      context.read<TCubit>().fetch(idToFetch: idToCheck as TIdType);
+    }
+  }
 
   const FetchAndRefreshStateValidWrapper({
     super.key,
@@ -43,6 +52,7 @@ class FetchAndRefreshStateValidWrapper<
     this.loadingRender,
     this.errorRender,
     this.sliver = false,
+    this.allowRetry = true,
     this.retryText,
     this.errorText,
   });
@@ -72,11 +82,9 @@ class FetchAndRefreshStateValidWrapper<
                       children: [
                         Text(errorText?.call(context) ?? 'An error occurred'),
                         const SizedBox(height: 20),
-                        if (idToCheck != null)
+                        if (allowRetry)
                           ElevatedButton(
-                            onPressed: () {
-                              context.read<TCubit>().fetch(idToFetch: idToCheck as TIdType);
-                            },
+                            onPressed: () => (context, localState),
                             child: Text(retryText?.call(context) ?? 'Retry'),
                           ),
                       ],
