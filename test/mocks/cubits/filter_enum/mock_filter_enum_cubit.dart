@@ -19,8 +19,8 @@ class MockFilterEnumCubit extends FilterEnumCubit<MockEnum, MockFilterEnumEntity
             ),
           ),
           enumValues: MockEnum.values,
-          enumBuilder: (MockEnum s, bool b) => MockFilterEnumEntity(s, b),
           selectedByDefault: selectedByDefault,
+          createFilter: (MockEnum tEnum, bool picked) => MockFilterEnumEntity(tEnum, picked),
         );
 
   @override
