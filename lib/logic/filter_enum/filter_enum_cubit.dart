@@ -10,16 +10,25 @@ part 'filter_enum_state.dart';
 class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEntity<TEnum>,
         TState extends FilterEnumState<TEnum, TFilterEnumEntity>> extends Cubit<TState>
     with CubitPreventsEmitOnClosed<TState> {
+  /// List of all possible enum values for the filter
   final List<TEnum> enumValues;
-  final TFilterEnumEntity Function(TEnum, bool) enumBuilder;
+
+  /// Used to set the default selection of the enum's values
   final bool Function(TEnum) selectedByDefault;
+
+  /// Custom constructor of the filter, used by FilterEnumCubit instances where no override of enumBuilder is needed
+  /// Nullable because if more params are needed to create a TFilterEnumEntity (like a quantitie, a label...) the function enumBuilder should be overriden
+  final TFilterEnumEntity Function(TEnum tEnum, bool picked)? createFilter;
 
   FilterEnumCubit(
     super.initialState, {
     required this.enumValues,
-    required this.enumBuilder,
     required this.selectedByDefault,
+    required this.createFilter,
   });
+
+  @protected
+  TFilterEnumEntity enumBuilder(TEnum tEnum, bool picked) => createFilter!(tEnum, picked);
 
   @mustBeOverridden
   @protected

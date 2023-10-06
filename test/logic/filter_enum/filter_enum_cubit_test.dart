@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_bloc_toolbox/entities/filter_enum_entity.dart';
 import 'package:flutter_bloc_toolbox/logic/filter_enum/filter_enum_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,9 +6,8 @@ import '../../mocks/cubits/filter_enum/mock_filter_enum_cubit.dart';
 import '../../mocks/cubits/filter_enum/mock_filter_enum_entity.dart';
 import '../../mocks/enums/mock_enum.dart';
 
-typedef FilterEnumTest = FilterEnumEntity<MockEnum>;
-typedef FilterState = FilterEnumState<MockEnum, FilterEnumTest>;
-typedef FilterCubit = FilterEnumCubit<MockEnum, FilterEnumTest, FilterState>;
+typedef FilterState = FilterEnumState<MockEnum, MockFilterEnumEntity>;
+typedef FilterCubit = FilterEnumCubit<MockEnum, MockFilterEnumEntity, FilterState>;
 
 void main() {
   group('FilterEnum  with correct state', () {
@@ -18,20 +16,20 @@ void main() {
     blocTest<FilterCubit, FilterState>(
       'FilterEnum initial and change value several times',
       build: () => FilterCubit(
-        FilterEnumInitialState<MockEnum, FilterEnumTest>(
+        FilterEnumInitialState<MockEnum, MockFilterEnumEntity>(
           MockEnum.values,
-          (MockEnum s, bool b) => FilterEnumTest(s, b),
+          (MockEnum s, bool b) => MockFilterEnumEntity(s, b),
         ),
         enumValues: MockEnum.values,
-        enumBuilder: (MockEnum s, bool b) => FilterEnumEntity(s, b),
         selectedByDefault: selectedByDefault,
+        createFilter: (MockEnum tEnum, bool picked) => MockFilterEnumEntity(tEnum, picked),
       ),
       act: (cubit) {
         cubit.toggleEnum(MockEnum.mock1);
         cubit.toggleEnum(MockEnum.mock2);
         cubit.toggleEnum(MockEnum.mock1);
         cubit.setDefaultFilters();
-        cubit.setFiltersFromList(const [FilterEnumEntity(MockEnum.mock3, true)]);
+        cubit.setFiltersFromList(const [MockFilterEnumEntity(MockEnum.mock3, true)]);
         cubit.setFilterFromPicked(const [MockEnum.mock3, MockEnum.mock1, MockEnum.mock2]);
         cubit.setDefaultFilters();
       },
