@@ -18,7 +18,7 @@ class FilterEnumCubitExample extends FilterEnumCubit<FilterEnum, FilterEnumEntit
             ),
           ),
           enumValues: FilterEnum.values,
-          enumBuilder: (FilterEnum s, bool b) => FilterEnumEntity<FilterEnum>(s, b),
+          createFilter: (FilterEnum s, bool b) => FilterEnumEntity<FilterEnum>(s, b),
           selectedByDefault: selectedByDefault,
         );
 

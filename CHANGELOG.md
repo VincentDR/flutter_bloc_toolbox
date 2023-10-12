@@ -1,3 +1,7 @@
+## 0.1.6
+
+Fix currentState of FetchAndRefreshPaginatedCubit.
+
 ## 0.1.5
 
 Cleaner filter builder for customisation.
