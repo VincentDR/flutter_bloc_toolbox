@@ -170,6 +170,7 @@ class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPaginatedState
       emit(createFetchingState(idToFetch) as TState);
     }
 
+    currentState = state;
     TType? objects = await getObject(
       idToGet: idToFetch,
       loadMore: loadMore,
