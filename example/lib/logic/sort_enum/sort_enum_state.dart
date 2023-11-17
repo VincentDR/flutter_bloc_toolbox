@@ -5,9 +5,9 @@ sealed class SortEnumStateExample extends SortEnumState<SortEnum> {
 }
 
 class SortEnumInitialStateExample extends SortEnumStateExample implements SortEnumInitialState<SortEnum> {
-  const SortEnumInitialStateExample({required SortEnumEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
+  const SortEnumInitialStateExample({required super.sortEntity});
 }
 
 class SortEnumChangedStateExample extends SortEnumStateExample implements SortEnumChangedState<SortEnum> {
-  const SortEnumChangedStateExample({required SortEnumEntity<SortEnum> sortEntity}) : super(sortEntity: sortEntity);
+  const SortEnumChangedStateExample({required super.sortEntity});
 }

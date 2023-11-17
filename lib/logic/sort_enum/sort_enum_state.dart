@@ -14,9 +14,9 @@ abstract class SortEnumState<T extends Enum> extends Equatable {
 }
 
 class SortEnumInitialState<T extends Enum> extends SortEnumState<T> {
-  const SortEnumInitialState({required SortEnumEntity<T> sortEntity}) : super(sortEntity: sortEntity);
+  const SortEnumInitialState({required super.sortEntity});
 }
 
 class SortEnumChangedState<T extends Enum> extends SortEnumState<T> {
-  const SortEnumChangedState({required SortEnumEntity<T> sortEntity}) : super(sortEntity: sortEntity);
+  const SortEnumChangedState({required super.sortEntity});
 }
