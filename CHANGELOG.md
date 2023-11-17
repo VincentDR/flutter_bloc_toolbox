@@ -1,3 +1,11 @@
+## 0.1.8
+
+Update dependencies with Flutter 3.16.0.
+
+## 0.1.7
+
+Update dependencies.
+
 ## 0.1.6
 
 Fix currentState of FetchAndRefreshPaginatedCubit.

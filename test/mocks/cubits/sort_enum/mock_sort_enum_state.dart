@@ -5,9 +5,9 @@ sealed class MockSortEnumState extends SortEnumState<MockEnum> {
 }
 
 class MockSortEnumInitialState extends MockSortEnumState implements SortEnumInitialState<MockEnum> {
-  const MockSortEnumInitialState({required SortEnumEntity<MockEnum> sortEntity}) : super(sortEntity: sortEntity);
+  const MockSortEnumInitialState({required super.sortEntity});
 }
 
 class MockSortEnumChangedState extends MockSortEnumState implements SortEnumChangedState<MockEnum> {
-  const MockSortEnumChangedState({required SortEnumEntity<MockEnum> sortEntity}) : super(sortEntity: sortEntity);
+  const MockSortEnumChangedState({required super.sortEntity});
 }
