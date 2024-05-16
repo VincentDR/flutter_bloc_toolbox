@@ -1,3 +1,7 @@
+## 0.1.10
+
+Update dependencies with Flutter 3.22.0.
+
 ## 0.1.9
 
 Add repository to pubspec.
