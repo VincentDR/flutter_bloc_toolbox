@@ -1,4 +1,4 @@
-library flutter_bloc_toolbox;
+library;
 
 //#region Common
 export 'common/extensions/stream.dart' show StreamExtensions;
