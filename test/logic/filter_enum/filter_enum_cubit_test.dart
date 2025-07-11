@@ -29,13 +29,21 @@ void main() {
         cubit.toggleEnum(MockEnum.mock2);
         cubit.toggleEnum(MockEnum.mock1);
         cubit.setDefaultFilters();
-        cubit.setFiltersFromList(const [MockFilterEnumEntity(MockEnum.mock3, true)]);
-        cubit.setFilterFromPicked(const [MockEnum.mock3, MockEnum.mock1, MockEnum.mock2]);
+        cubit.setFiltersFromList(
+          const [MockFilterEnumEntity(MockEnum.mock3, true)],
+        );
+        cubit.setFilterFromPicked(
+          const [MockEnum.mock3, MockEnum.mock1, MockEnum.mock2],
+        );
         cubit.setDefaultFilters();
       },
       expect: () => [
         isA<FilterEnumFilteredState>().having(
-          (a) => a.filters.where((element) => element.picked && element.filterEnum == MockEnum.mock1).isNotEmpty,
+          (a) => a.filters
+              .where(
+                (element) => element.picked && element.filterEnum == MockEnum.mock1,
+              )
+              .isNotEmpty,
           'Change state',
           true,
         ),
@@ -98,7 +106,11 @@ void main() {
       act: (cubit) => cubit.toggleEnum(MockEnum.mock1),
       expect: () => [
         isA<FilterEnumFilteredState>().having(
-          (a) => a.filters.where((element) => element.picked && element.filterEnum == MockEnum.mock1).isNotEmpty,
+          (a) => a.filters
+              .where(
+                (element) => element.picked && element.filterEnum == MockEnum.mock1,
+              )
+              .isNotEmpty,
           'Change state',
           true,
         ),
@@ -113,13 +125,21 @@ void main() {
         cubit.toggleEnum(MockEnum.mock2);
         cubit.toggleEnum(MockEnum.mock1);
         cubit.setDefaultFilters();
-        cubit.setFiltersFromList(const [MockFilterEnumEntity(MockEnum.mock3, true)]);
-        cubit.setFilterFromPicked(const [MockEnum.mock3, MockEnum.mock1, MockEnum.mock2]);
+        cubit.setFiltersFromList(
+          const [MockFilterEnumEntity(MockEnum.mock3, true)],
+        );
+        cubit.setFilterFromPicked(
+          const [MockEnum.mock3, MockEnum.mock1, MockEnum.mock2],
+        );
         cubit.setDefaultFilters();
       },
       expect: () => [
         isA<FilterEnumFilteredState>().having(
-          (a) => a.filters.where((element) => element.picked && element.filterEnum == MockEnum.mock1).isNotEmpty,
+          (a) => a.filters
+              .where(
+                (element) => element.picked && element.filterEnum == MockEnum.mock1,
+              )
+              .isNotEmpty,
           'Change state',
           true,
         ),

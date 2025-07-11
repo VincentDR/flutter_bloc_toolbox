@@ -202,7 +202,7 @@ void main() {
         fetchObject: getObjectTest,
       ),
       act: (cubit) async {
-        await cubit.directSet(idToGet, paginationEntity);
+        cubit.directSet(idToGet, paginationEntity);
         await cubit.refresh();
       },
       expect: () => [

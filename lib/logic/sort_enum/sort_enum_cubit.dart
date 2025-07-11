@@ -30,15 +30,15 @@ class SortEnumCubit<TEnum extends Enum, TState extends SortEnumState<TEnum>> ext
       SortEnumChangedState(sortEntity: sortEntity);
 
   /// Prevents same sort to be used from initial to changed
-  _checkIsAlreadySet(SortEnumEntity<TEnum> sortEntity) {
+  void _checkIsAlreadySet(SortEnumEntity<TEnum> sortEntity) {
     if (state.sortEntity != sortEntity) {
       emit(createChangedState(sortEntity) as TState);
     }
   }
 
   /// Change the current sortEntity
-  changeSort(SortEnumEntity<TEnum> sortEntity) => _checkIsAlreadySet(sortEntity);
+  void changeSort(SortEnumEntity<TEnum> sortEntity) => _checkIsAlreadySet(sortEntity);
 
   /// Use defaultIndex to set the sort
-  resetSortToDefault() => _checkIsAlreadySet(availableSorts.elementAt(defaultIndex));
+  void resetSortToDefault() => _checkIsAlreadySet(availableSorts.elementAt(defaultIndex));
 }

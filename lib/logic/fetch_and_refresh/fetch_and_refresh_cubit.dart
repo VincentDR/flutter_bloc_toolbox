@@ -99,12 +99,12 @@ class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, 
   }
 
   /// Should reset the cubit to initialState
-  reset() {
+  void reset() {
     emit(createInitialState() as TState);
   }
 
   /// Used to directly pass an instance of the object
-  directSet(TIdType id, TType objectToSet) {
+  void directSet(TIdType id, TType objectToSet) {
     emit(createFetchedSuccessState(id, objectToSet) as TState);
   }
 

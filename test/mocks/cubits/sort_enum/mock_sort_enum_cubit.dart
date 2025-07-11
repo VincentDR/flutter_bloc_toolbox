@@ -37,10 +37,14 @@ class MockSortEnumCubit extends SortEnumCubit<MockEnum, MockSortEnumState> {
     super.availableSorts = sortsToUse,
     super.defaultIndex = 3,
   }) : super(
-          MockSortEnumInitialState(sortEntity: availableSorts.elementAt(defaultIndex)),
+          MockSortEnumInitialState(
+            sortEntity: availableSorts.elementAt(defaultIndex),
+          ),
         );
 
   @override
-  MockSortEnumChangedState createChangedState(SortEnumEntity<MockEnum> sortEntity) =>
+  MockSortEnumChangedState createChangedState(
+    SortEnumEntity<MockEnum> sortEntity,
+  ) =>
       MockSortEnumChangedState(sortEntity: sortEntity);
 }

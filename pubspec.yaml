@@ -1,6 +1,6 @@
 name: flutter_bloc_toolbox
 description: Build on top of the wonderful flutter_bloc package. Contains some useful blocs/cubits.
-version: 0.1.11
+version: 0.1.12
 homepage: https://github.com/VincentDR/flutter_bloc_toolbox
 repository: https://github.com/VincentDR/flutter_bloc_toolbox
 issue_tracker: https://github.com/VincentDR/flutter_bloc_toolbox/issues
@@ -17,17 +17,17 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  bloc_test: ^9.1.7
+  bloc_test: ^10.0.0
   equatable: ^2.0.7
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
-  meta: ^1.15.0
+  flutter_bloc: ^9.1.1
+  meta: ^1.16.0
 
 dev_dependencies:
   analysis_options: any
-  data_fixture_dart: ^2.2.0
-  flutter_lints: ^5.0.0
+  data_fixture_dart: ^3.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4

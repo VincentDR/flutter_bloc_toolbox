@@ -17,15 +17,19 @@ void main() {
 
     testWidgets('FetchAndRefreshStateValidWrapper test valid state', (WidgetTester tester) async {
       final MockFetchAndRefreshCubit mockFetchAndRefreshCubit = MockFetchAndRefreshCubit(personRepository);
-      when(() => personRepository.getObject(idToGet))
-          .thenAnswer((_) async => PersonEntityFixture.factory(idToGet).makeSingle());
+      when(() => personRepository.getObject(idToGet)).thenAnswer(
+        (_) async => PersonEntityFixture.factory(idToGet).makeSingle(),
+      );
 
       await tester.pumpWidget(
         makeTestableWidget(
           child: BlocProvider<MockFetchAndRefreshCubit>.value(
             value: mockFetchAndRefreshCubit,
             child: MockFetchAndRefreshStateValidWrapper(
-              validRender: (BuildContext context, MockFetchAndRefreshWithValueState validState) {
+              validRender: (
+                BuildContext context,
+                MockFetchAndRefreshWithValueState validState,
+              ) {
                 return const ColoredBox(
                   color: Colors.green,
                 );
@@ -38,19 +42,28 @@ void main() {
       /// First fetch on success
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await mockFetchAndRefreshCubit.fetch(idToFetch: idToGet);
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshSuccessState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshSuccessState>(),
+      );
       await tester.pump();
       expect(find.byType(ColoredBox), findsOneWidget);
 
       /// Refresh on success
       await mockFetchAndRefreshCubit.refresh();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshRefreshingSuccessState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshRefreshingSuccessState>(),
+      );
       await tester.pump();
       expect(find.byType(ColoredBox), findsOneWidget);
 
       /// Reset
       mockFetchAndRefreshCubit.reset();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshInitialState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshInitialState>(),
+      );
       await tester.pump(const Duration(seconds: 1));
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
@@ -59,8 +72,9 @@ void main() {
 
     testWidgets('FetchAndRefreshStateValidWrapper test valid state and sliver', (WidgetTester tester) async {
       final MockFetchAndRefreshCubit mockFetchAndRefreshCubit = MockFetchAndRefreshCubit(personRepository);
-      when(() => personRepository.getObject(idToGet))
-          .thenAnswer((_) async => PersonEntityFixture.factory(idToGet).makeSingle());
+      when(() => personRepository.getObject(idToGet)).thenAnswer(
+        (_) async => PersonEntityFixture.factory(idToGet).makeSingle(),
+      );
 
       await tester.pumpWidget(
         makeTestableWidget(
@@ -71,7 +85,10 @@ void main() {
               slivers: [
                 MockFetchAndRefreshStateValidWrapper(
                   sliver: true,
-                  validRender: (BuildContext context, MockFetchAndRefreshWithValueState validState) {
+                  validRender: (
+                    BuildContext context,
+                    MockFetchAndRefreshWithValueState validState,
+                  ) {
                     return const SliverToBoxAdapter(
                       child: ColoredBox(
                         color: Colors.green,
@@ -88,19 +105,28 @@ void main() {
       /// First fetch on success
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await mockFetchAndRefreshCubit.fetch(idToFetch: idToGet);
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshSuccessState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshSuccessState>(),
+      );
       await tester.pump();
       expect(find.byType(ColoredBox), findsOneWidget);
 
       /// Refresh on success
       await mockFetchAndRefreshCubit.refresh();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshRefreshingSuccessState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshRefreshingSuccessState>(),
+      );
       await tester.pump();
       expect(find.byType(ColoredBox), findsOneWidget);
 
       /// Reset
       mockFetchAndRefreshCubit.reset();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshInitialState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshInitialState>(),
+      );
       await tester.pump(const Duration(seconds: 1));
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
@@ -117,7 +143,10 @@ void main() {
             value: mockFetchAndRefreshCubit,
             child: MockFetchAndRefreshStateValidWrapper(
               idToCheck: idToGet,
-              validRender: (BuildContext context, MockFetchAndRefreshWithValueState validState) {
+              validRender: (
+                BuildContext context,
+                MockFetchAndRefreshWithValueState validState,
+              ) {
                 return const ColoredBox(
                   color: Colors.green,
                 );
@@ -130,19 +159,28 @@ void main() {
       /// First fetch on error
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await mockFetchAndRefreshCubit.fetch(idToFetch: idToGet);
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshFetchingErrorState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshFetchingErrorState>(),
+      );
       await tester.pump();
       expect(find.byType(Text), findsNWidgets(2));
 
       /// Refresh does a fetch as there is no data yet
       await mockFetchAndRefreshCubit.refresh();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshFetchingErrorState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshFetchingErrorState>(),
+      );
       await tester.pump();
       expect(find.byType(Text), findsNWidgets(2));
 
       /// Click on the error button
       await tester.tap((find.byType(ElevatedButton)));
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshFetchingErrorState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshFetchingErrorState>(),
+      );
       await tester.pump();
       expect(find.byType(Text), findsNWidgets(2));
 
@@ -160,7 +198,10 @@ void main() {
             value: mockFetchAndRefreshCubit,
             child: MockFetchAndRefreshStateValidWrapper(
               allowRetry: false,
-              validRender: (BuildContext context, MockFetchAndRefreshWithValueState validState) {
+              validRender: (
+                BuildContext context,
+                MockFetchAndRefreshWithValueState validState,
+              ) {
                 return const ColoredBox(
                   color: Colors.green,
                 );
@@ -173,13 +214,19 @@ void main() {
       /// First fetch on error
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await mockFetchAndRefreshCubit.fetch(idToFetch: idToGet);
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshFetchingErrorState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshFetchingErrorState>(),
+      );
       await tester.pump();
       expect(find.byType(Text), findsOneWidget);
 
       /// Refresh does a fetch as there is no data yet
       await mockFetchAndRefreshCubit.refresh();
-      expect(mockFetchAndRefreshCubit.state, isA<FetchAndRefreshFetchingErrorState>());
+      expect(
+        mockFetchAndRefreshCubit.state,
+        isA<FetchAndRefreshFetchingErrorState>(),
+      );
       await tester.pump();
       expect(find.byType(Text), findsOneWidget);
 

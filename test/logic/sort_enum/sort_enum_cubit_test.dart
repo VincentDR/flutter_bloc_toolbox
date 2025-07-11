@@ -77,7 +77,10 @@ void main() {
       SortEnumCubit sortEnumCubit = MockSortEnumCubit();
       SortEnumState currentState = sortEnumCubit.state;
       expect(currentState is SortEnumInitialState, true);
-      expect(currentState.sortEntity, MockSortEnumCubit.sortsToUse.elementAt(sortEnumCubit.defaultIndex));
+      expect(
+        currentState.sortEntity,
+        MockSortEnumCubit.sortsToUse.elementAt(sortEnumCubit.defaultIndex),
+      );
     });
 
     blocTest<MockSortEnumCubit, MockSortEnumState>(
@@ -94,9 +97,16 @@ void main() {
         cubit.resetSortToDefault();
       },
       expect: () => [
-        isA<SortEnumChangedState>().having((a) => a.sortEntity, 'Change state', MockSortEnumCubit.sortsToUse.first),
-        isA<SortEnumChangedState>()
-            .having((a) => a.sortEntity, 'Change state', MockSortEnumCubit.sortsToUse.elementAt(3)),
+        isA<SortEnumChangedState>().having(
+          (a) => a.sortEntity,
+          'Change state',
+          MockSortEnumCubit.sortsToUse.first,
+        ),
+        isA<SortEnumChangedState>().having(
+          (a) => a.sortEntity,
+          'Change state',
+          MockSortEnumCubit.sortsToUse.elementAt(3),
+        ),
       ],
     );
   });
