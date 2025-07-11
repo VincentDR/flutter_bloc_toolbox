@@ -10,12 +10,12 @@ class SearchTextCubit extends Cubit<SearchTextState> with CubitPreventsEmitOnClo
   SearchTextCubit() : super(const SearchTextInitialState());
 
   /// Emit a state with new searchText
-  setText(String searchText) {
+  void setText(String searchText) {
     emit(SearchTextUpdatedState(searchText: searchText));
   }
 
   /// Emit a state without text
-  eraseText() {
+  void eraseText() {
     emit(const SearchTextUpdatedState());
   }
 }

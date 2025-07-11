@@ -85,7 +85,7 @@ void main() {
         fetchObject: getObjectTest,
       ),
       act: (cubit) async {
-        await cubit.directSet(idToGet, personEntity);
+        cubit.directSet(idToGet, personEntity);
         await cubit.refresh();
       },
       expect: () => [

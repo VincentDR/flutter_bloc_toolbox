@@ -27,19 +27,31 @@ class MockFetchAndRefreshCubit extends FetchAndRefreshCubit<MockFetchAndRefreshS
       MockFetchAndRefreshFetchingErrorState(id: id);
 
   @override
-  MockFetchAndRefreshFetchingSuccessState createFetchedSuccessState(String id, PersonEntity objectToSet) =>
+  MockFetchAndRefreshFetchingSuccessState createFetchedSuccessState(
+    String id,
+    PersonEntity objectToSet,
+  ) =>
       MockFetchAndRefreshFetchingSuccessState(id: id, object: objectToSet);
 
   @override
-  MockFetchAndRefreshRefreshingState createRefreshingState(String id, PersonEntity objectToSet) =>
+  MockFetchAndRefreshRefreshingState createRefreshingState(
+    String id,
+    PersonEntity objectToSet,
+  ) =>
       MockFetchAndRefreshRefreshingState(id: id, object: objectToSet);
 
   @override
-  MockFetchAndRefreshRefreshingSuccessState createRefreshedSuccessState(String id, PersonEntity objectToSet) =>
+  MockFetchAndRefreshRefreshingSuccessState createRefreshedSuccessState(
+    String id,
+    PersonEntity objectToSet,
+  ) =>
       MockFetchAndRefreshRefreshingSuccessState(id: id, object: objectToSet);
 
   @override
-  MockFetchAndRefreshRefreshingErrorState createRefreshedErrorState(String id, PersonEntity objectToSet) =>
+  MockFetchAndRefreshRefreshingErrorState createRefreshedErrorState(
+    String id,
+    PersonEntity objectToSet,
+  ) =>
       MockFetchAndRefreshRefreshingErrorState(id: id, object: objectToSet);
 
   //#endregion States creation

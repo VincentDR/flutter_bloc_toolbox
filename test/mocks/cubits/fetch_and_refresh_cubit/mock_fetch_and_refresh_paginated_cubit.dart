@@ -28,7 +28,9 @@ class MockFetchAndRefreshPaginatedCubit
       MockFetchAndRefreshPaginatedFetchingState(id: id);
 
   @override
-  MockFetchAndRefreshPaginatedFetchingErrorState createFetchedErrorState(String id) =>
+  MockFetchAndRefreshPaginatedFetchingErrorState createFetchedErrorState(
+    String id,
+  ) =>
       MockFetchAndRefreshPaginatedFetchingErrorState(id: id);
 
   @override
@@ -36,7 +38,10 @@ class MockFetchAndRefreshPaginatedCubit
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedFetchingSuccessState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedFetchingSuccessState(
+        id: id,
+        object: objectToSet,
+      );
 
   @override
   MockFetchAndRefreshPaginatedRefreshingState createRefreshingState(
@@ -50,35 +55,50 @@ class MockFetchAndRefreshPaginatedCubit
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedRefreshingSuccessState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedRefreshingSuccessState(
+        id: id,
+        object: objectToSet,
+      );
 
   @override
   MockFetchAndRefreshPaginatedRefreshingErrorState createRefreshedErrorState(
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedRefreshingErrorState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedRefreshingErrorState(
+        id: id,
+        object: objectToSet,
+      );
 
   @override
   MockFetchAndRefreshPaginatedFetchingMoreState createFetchingPaginatedMoreState(
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedFetchingMoreState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedFetchingMoreState(
+        id: id,
+        object: objectToSet,
+      );
 
   @override
   MockFetchAndRefreshPaginatedFetchingMoreSuccessState createFetchingPaginatedMoreSuccessState(
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedFetchingMoreSuccessState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedFetchingMoreSuccessState(
+        id: id,
+        object: objectToSet,
+      );
 
   @override
   MockFetchAndRefreshPaginatedFetchingMoreErrorState createFetchingPaginatedMoreErrorState(
     String id,
     PaginationEntity<PersonEntity> objectToSet,
   ) =>
-      MockFetchAndRefreshPaginatedFetchingMoreErrorState(id: id, object: objectToSet);
+      MockFetchAndRefreshPaginatedFetchingMoreErrorState(
+        id: id,
+        object: objectToSet,
+      );
 //#endregion States creation
 
   @override

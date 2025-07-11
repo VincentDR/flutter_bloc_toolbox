@@ -23,7 +23,7 @@ class _PersonEntityFixtureFactory extends FixtureFactory<PersonEntity> {
 
   @override
   FixtureDefinition<PersonEntity> definition() => define(
-        (faker) => PersonEntity(
+        (faker, [int index = 0]) => PersonEntity(
           id: id,
           lastName: faker.person.lastName(),
           firstName: faker.person.firstName(),

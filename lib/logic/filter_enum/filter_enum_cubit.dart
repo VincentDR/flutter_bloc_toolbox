@@ -45,7 +45,7 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
       FilterEnumDefaultFilterState<TEnum, TFilterEnumEntity>(filters);
 
   /// Change the picked value of a single TFilterEnumEntity, corresponding to the TEnum
-  toggleEnum(TEnum toggledEnum) {
+  void toggleEnum(TEnum toggledEnum) {
     emit(
       createFilteredState(
         List<TFilterEnumEntity>.generate(
@@ -67,7 +67,7 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
   }
 
   /// Change the current filters from a list
-  setFiltersFromList(List<TFilterEnumEntity> possibleEnums) {
+  void setFiltersFromList(List<TFilterEnumEntity> possibleEnums) {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = possibleEnums.where((element) => element.filterEnum == model).firstOrNull?.picked ?? false;
@@ -77,7 +77,7 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
   }
 
   /// Set the filters by default
-  setDefaultFilters() {
+  void setDefaultFilters() {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = selectedByDefault(model);
@@ -87,7 +87,7 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
   }
 
   /// Set the filters based on a list of picked TEnum
-  setFilterFromPicked(List<TEnum> selectedFilters) {
+  void setFilterFromPicked(List<TEnum> selectedFilters) {
     List<TFilterEnumEntity> newFilters = [];
     for (TEnum model in enumValues.reversed) {
       bool mustBePicked = selectedFilters.contains(model);

@@ -1,3 +1,11 @@
+## 0.1.12
+
+Update dependencies with Flutter 3.32.6.
+
+## 0.1.11
+
+Update dependencies with Flutter 3.27.1.
+
 ## 0.1.10
 
 Update dependencies with Flutter 3.22.0.

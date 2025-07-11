@@ -27,7 +27,7 @@ class _PaginationPersonEntityFixtureFactory extends FixtureFactory<PaginationPer
   _PaginationPersonEntityFixtureFactory(this.id);
 
   @override
-  FixtureDefinition<PaginationPersonEntity> definition() => define((faker) {
+  FixtureDefinition<PaginationPersonEntity> definition() => define((faker, [int index = 0]) {
         int count = 30;
         return PaginationPersonEntity(
           id: id,
