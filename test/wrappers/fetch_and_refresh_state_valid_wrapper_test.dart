@@ -11,6 +11,8 @@ import '../mocks/testable_widget.dart';
 import '../mocks/wrappers/mock_fetch_and_refresh_state_valid_wrapper.dart';
 
 void main() {
+  const String successText = "It's success";
+
   group('FetchAndRefreshStateValidWrapper test', () {
     String idToGet = 'idToGet';
     MockRepository<PersonEntity> personRepository = MocktailRepository<PersonEntity>();
@@ -30,9 +32,7 @@ void main() {
                 BuildContext context,
                 MockFetchAndRefreshWithValueState validState,
               ) {
-                return const ColoredBox(
-                  color: Colors.green,
-                );
+                return const Text(successText);
               },
             ),
           ),
@@ -47,7 +47,7 @@ void main() {
         isA<FetchAndRefreshSuccessState>(),
       );
       await tester.pump();
-      expect(find.byType(ColoredBox), findsOneWidget);
+      expect(find.text(successText), findsOneWidget);
 
       /// Refresh on success
       await mockFetchAndRefreshCubit.refresh();
@@ -89,11 +89,7 @@ void main() {
                     BuildContext context,
                     MockFetchAndRefreshWithValueState validState,
                   ) {
-                    return const SliverToBoxAdapter(
-                      child: ColoredBox(
-                        color: Colors.green,
-                      ),
-                    );
+                    return const SliverToBoxAdapter(child: Text(successText));
                   },
                 ),
               ],
@@ -110,7 +106,7 @@ void main() {
         isA<FetchAndRefreshSuccessState>(),
       );
       await tester.pump();
-      expect(find.byType(ColoredBox), findsOneWidget);
+      expect(find.text(successText), findsOneWidget);
 
       /// Refresh on success
       await mockFetchAndRefreshCubit.refresh();
