@@ -1,12 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_toolbox/common/mixins/cubit.dart';
 import 'package:flutter_bloc_toolbox/entities/sort_enum_entity.dart';
 import 'package:meta/meta.dart';
 
 part 'sort_enum_state.dart';
 
 /// Allow to switch between different sort_enum options
-class SortEnumCubit<TEnum extends Enum, TState extends SortEnumState<TEnum>> extends Cubit<TState> {
+class SortEnumCubit<TEnum extends Enum, TState extends SortEnumState<TEnum>> extends Cubit<TState>
+    with CubitPreventsEmitOnClosed<TState> {
   /// All the sorts that can be used
   final List<SortEnumEntity<TEnum>> availableSorts;
 

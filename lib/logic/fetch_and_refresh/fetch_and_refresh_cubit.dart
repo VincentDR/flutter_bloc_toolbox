@@ -136,7 +136,7 @@ class FetchAndRefreshCubit<TState extends FetchAndRefreshState<TIdType, TType>, 
     }
 
     if (currentState is! FetchAndRefreshWithValueState) {
-      fetch(idToFetch: currentState.id);
+      await fetch(idToFetch: currentState.id);
       return;
     }
 

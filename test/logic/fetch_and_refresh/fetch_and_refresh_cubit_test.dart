@@ -129,6 +129,27 @@ void main() {
         ),
       ],
     );
+
+    blocTest<FetchAndRefreshCubitTest, FetchAndRefreshStateTest>(
+      'FetchAndRefreshCubit refresh from error state triggers a new fetch',
+      build: () => FetchAndRefreshCubitTest(fetchObject: getObjectTest),
+      act: (cubit) async {
+        when(() => personRepository.getObject(idToGet)).thenAnswer((_) async => null);
+        await cubit.fetch(idToFetch: idToGet);
+        when(() => personRepository.getObject(idToGet)).thenAnswer((_) async => personEntity);
+        await cubit.refresh();
+      },
+      expect: () => [
+        isA<FetchAndRefreshFetchingState>().having((a) => a.id, 'id', idToGet),
+        isA<FetchAndRefreshFetchingErrorState>().having((a) => a.id, 'id', idToGet),
+        isA<FetchAndRefreshFetchingState>().having((a) => a.id, 'id', idToGet),
+        isA<FetchAndRefreshFetchingSuccessState>().having(
+          (a) => a.id == idToGet && a.object == personEntity,
+          'success',
+          true,
+        ),
+      ],
+    );
   });
 
   group('FetchAndRefreshCubit extended', () {

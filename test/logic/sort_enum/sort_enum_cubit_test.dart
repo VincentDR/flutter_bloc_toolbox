@@ -110,4 +110,33 @@ void main() {
       ],
     );
   });
+
+  group('SortEnumEntity equality', () {
+    test('Same-value instances are equal', () {
+      const entity1 = SortEnumTest(ascendant: true, sortEnum: MockEnum.mock1);
+      const entity2 = SortEnumTest(ascendant: true, sortEnum: MockEnum.mock1);
+      expect(entity1, entity2);
+    });
+
+    test('Different-value instances are not equal', () {
+      const entity1 = SortEnumTest(ascendant: true, sortEnum: MockEnum.mock1);
+      const entity2 = SortEnumTest(ascendant: false, sortEnum: MockEnum.mock1);
+      expect(entity1, isNot(entity2));
+    });
+
+    blocTest<SortEnumCubit<MockEnum, SortState>, SortState>(
+      'SortEnumCubit does not emit when called with a new equal-valued instance',
+      build: () {
+        const initialSort = SortEnumTest(ascendant: true, sortEnum: MockEnum.mock1);
+        return SortCubit(
+          SortEnumInitialState(sortEntity: initialSort),
+          availableSorts: [initialSort],
+        );
+      },
+      act: (cubit) => cubit.changeSort(
+        const SortEnumTest(ascendant: true, sortEnum: MockEnum.mock1),
+      ),
+      expect: () => [],
+    );
+  });
 }
