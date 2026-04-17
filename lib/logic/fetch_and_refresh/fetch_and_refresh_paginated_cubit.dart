@@ -208,7 +208,7 @@ class FetchAndRefreshPaginatedCubit<TState extends FetchAndRefreshPaginatedState
     }
 
     if (currentState is! FetchAndRefreshWithValueState<TIdType, TType>) {
-      fetch(idToFetch: currentState.id);
+      await fetch(idToFetch: currentState.id);
       return;
     }
 

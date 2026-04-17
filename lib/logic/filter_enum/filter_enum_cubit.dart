@@ -54,31 +54,24 @@ class FilterEnumCubit<TEnum extends Enum, TFilterEnumEntity extends FilterEnumEn
   void toggleEnum(TEnum toggledEnum) {
     emit(
       createFilteredState(
-        List<TFilterEnumEntity>.generate(
-          state.filters.length,
-          (index) {
-            TFilterEnumEntity currentEnum = state.filters.elementAt(index);
-            if (currentEnum.filterEnum == toggledEnum) {
-              return enumBuilder(
-                currentEnum.filterEnum,
-                !currentEnum.picked,
-              );
-            } else {
-              return currentEnum;
-            }
-          },
-        ),
+        state.filters.map((currentEnum) {
+          if (currentEnum.filterEnum == toggledEnum) {
+            return enumBuilder(currentEnum.filterEnum, !currentEnum.picked);
+          }
+          return currentEnum;
+        }).toList(),
       ) as TState,
     );
   }
 
   /// Change the current filters from a list
   void setFiltersFromList(List<TFilterEnumEntity> possibleEnums) {
-    List<TFilterEnumEntity> newFilters = [];
-    for (TEnum model in enumValues) {
-      bool mustBePicked = possibleEnums.where((element) => element.filterEnum == model).firstOrNull?.picked ?? false;
-      newFilters.add(enumBuilder(model, mustBePicked));
-    }
+    final Map<TEnum, bool> pickedMap = {
+      for (final e in possibleEnums) e.filterEnum: e.picked,
+    };
+    final List<TFilterEnumEntity> newFilters = [
+      for (final model in enumValues) enumBuilder(model, pickedMap[model] ?? false),
+    ];
     emit(createFilteredState(newFilters) as TState);
   }
 

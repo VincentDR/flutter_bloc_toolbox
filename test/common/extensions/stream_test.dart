@@ -41,5 +41,28 @@ void main() {
 
       testingStream.close();
     });
+
+    test('Stream closed before matching element throws StateError', () async {
+      StreamController<int> testingStream = StreamController<int>.broadcast();
+
+      final future = testingStream.stream.firstNextElementWith(tester);
+
+      testingStream.add(1);
+      testingStream.add(3);
+      testingStream.close();
+
+      await expectLater(future, throwsA(isA<StateError>()));
+    });
+
+    test('Stream error propagates through firstNextElementWith', () async {
+      StreamController<int> testingStream = StreamController<int>.broadcast();
+
+      final future = testingStream.stream.firstNextElementWith(tester);
+
+      testingStream.addError(Exception('test error'));
+
+      await expectLater(future, throwsA(isA<Exception>()));
+      await testingStream.close();
+    });
   });
 }
