@@ -1,3 +1,7 @@
+## 0.2.0
+
+Some optimizations and tests.
+
 ## 0.1.13
 
 Update dependencies with Flutter 3.38.7.
