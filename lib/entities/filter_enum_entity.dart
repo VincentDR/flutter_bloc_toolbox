@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// Represent a filter based on a enum
-class FilterEnumEntity<T extends Enum> {
+class FilterEnumEntity<T extends Enum> extends Equatable {
   /// The enum of the entity
   final T filterEnum;
 
@@ -10,4 +12,7 @@ class FilterEnumEntity<T extends Enum> {
     this.filterEnum,
     this.picked,
   );
+
+  @override
+  List<Object?> get props => [filterEnum, picked];
 }
