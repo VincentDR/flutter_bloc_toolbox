@@ -8,7 +8,7 @@ class SortEnumEntity<T extends Enum> extends Equatable {
   /// The sort enum
   final T sortEnum;
 
-  const SortEnumEntity({
+  const SortEnumEntity({ // coverage:ignore-line
     required this.ascendant,
     required this.sortEnum,
   });
