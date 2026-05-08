@@ -12,6 +12,8 @@ export 'entities/sort_enum_entity.dart' show SortEnumEntity;
 //#endregion Entities
 
 //#region Logic
+export 'logic/async/async_cubit.dart'
+    show AsyncCubit, AsyncState, AsyncInitial, AsyncLoading, AsyncSuccess, AsyncFailure;
 export 'logic/bool/bool_cubit.dart' show BoolCubit, BoolState, BoolInitialState, BoolChangedState;
 export 'logic/fetch_and_refresh/fetch_and_refresh_cubit.dart'
     show
