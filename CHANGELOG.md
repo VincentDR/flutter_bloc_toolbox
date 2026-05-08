@@ -1,3 +1,7 @@
+## 0.2.1
+
+Adding AsyncCubit.
+
 ## 0.2.0
 
 Some optimizations and tests.
